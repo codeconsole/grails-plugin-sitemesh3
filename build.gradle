@@ -16,6 +16,7 @@ group = "org.sitemesh.grails.plugins.sitemesh3"
 repositories {
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 configurations {
@@ -25,6 +26,7 @@ configurations {
 }
 
 dependencies {
+    implementation("org.sitemesh:sitemesh:3.1.0-SNAPSHOT")
     implementation("org.grails:grails-core")
     implementation("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")

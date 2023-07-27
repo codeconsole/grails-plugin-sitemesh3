@@ -2,6 +2,13 @@ package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.plugins.*
 
+import org.sitemesh.builder.SiteMeshFilterBuilder
+import org.sitemesh.config.ConfigurableSiteMeshFilter
+import org.sitemesh.grails.plugins.sitemesh3.tagrules.GrailsTagRuleBundle
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.core.Ordered
+
 class Sitemesh3GrailsPlugin extends Plugin {
 
     // the version or versions of Grails the plugin is designed for
@@ -40,7 +47,16 @@ class Sitemesh3GrailsPlugin extends Plugin {
    //    def scm = [ url: "https://github.com/grails/Sitemesh3" ]
 
        Closure doWithSpring() { {->
-               // TODO Implement runtime spring config (optional)
+               sitemesh3Filter(FilterRegistrationBean) {
+                   filter = new ConfigurableSiteMeshFilter() {
+                       @Override
+                       protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
+                           builder.addTagRuleBundle(new GrailsTagRuleBundle())
+                       }
+                   }
+                   urlPatterns = ['/*']
+                   order = Ordered.HIGHEST_PRECEDENCE
+               }
            }
        }
 
