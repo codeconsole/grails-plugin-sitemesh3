@@ -19,3 +19,5 @@ grails:
     view:
       layoutViewResolver: false
 ````
+
+Waiting on being included into Grails. [See progress here](https://github.com/grails/grails-core/issues/13058)
