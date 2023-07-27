@@ -1,17 +1,17 @@
-## Grails 6.0.0 Documentation
+# SiteMesh 3 Grails Plugin
 
-- [User Guide](https://docs.grails.org/6.0.0/guide/index.html)
-- [API Reference](https://docs.grails.org/6.0.0/api/index.html)
-- [Grails Guides](https://guides.grails.org/index.html)
----
+Sample plugin demonstrating how to convert a Grails App to use Sitmesh 3 instead of Sitemesh 2
 
-## Feature scaffolding documentation
+You can see a working example by running:
+```./gradlew bootRun```
 
-- [Grails Scaffolding Plugin documentation](https://grails.github.io/scaffolding/latest/groovydoc/)
+After adding the plugin, you could see what changes would be needed in an existing app [here](https://github.com/codeconsole/grails-sitemesh3/commit/5ac65f482f22c0df983c46813c5958f036c98fab)
 
-- [https://grails-fields-plugin.github.io/grails-fields/latest/guide/index.html](https://grails-fields-plugin.github.io/grails-fields/latest/guide/index.html)
+If SiteMesh 2 can be elminitated from Grails, the `<sitemesh:` tag lib can be deleted and the `<g3:` taglib could be renamed to `<g:` and everything would be the same with the exception of how layouts are defined.
 
-## Feature asset-pipeline-grails documentation
+The only difference between SiteMesh 2 and SiteMesh 3 would then be layouts paths:
+```<meta name="layout" content="main"/>```
+is converted to 
+```<meta name="decorator" content="/layouts/main"/>```
 
-- [Grails Asset Pipeline Core documentation](https://www.asset-pipeline.com/manual/)
-
+but this could be fixed internally after SiteMesh 2 is removed from Grais as well.
