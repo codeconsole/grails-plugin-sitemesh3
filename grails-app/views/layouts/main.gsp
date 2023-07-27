@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>
-        <g:layoutTitle default="Grails"/>
+        <g3:layoutTitle default="Grails"/>
     </title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
     <asset:stylesheet src="application.css"/>
 
-    <g:layoutHead/>
+    <g3:layoutHead/>
 </head>
 
 <body>
@@ -25,13 +25,13 @@
 
         <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
             <ul class="nav navbar-nav ml-auto">
-                <g:pageProperty name="page.nav"/>
+                <g3:pageProperty name="page.nav"/>
             </ul>
         </div>
     </div>
 </nav>
 
-<g:layoutBody/>
+<g3:layoutBody/>
 
 <div class="footer" role="contentinfo">
     <div class="container-fluid">

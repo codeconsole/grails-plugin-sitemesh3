@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
+    <meta name="decorator" content="/layouts/main"/>
     <title>Welcome to Grails</title>
 </head>
 <body>
