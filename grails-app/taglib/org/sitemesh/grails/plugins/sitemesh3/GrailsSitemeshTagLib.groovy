@@ -1,7 +1,7 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
 class GrailsSitemeshTagLib {
-    static namespace = "g3"
+    static namespace = "g"
 
     def layoutTitle = { attrs ->
         out << """<sitemesh:write property="title">${attrs.default?:''}</sitemesh:write>""".toString()

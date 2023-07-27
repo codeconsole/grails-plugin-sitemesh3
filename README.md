@@ -1,17 +1,27 @@
 # SiteMesh 3 Grails Plugin
 
-Sample plugin demonstrating how to convert a Grails App to use Sitmesh 3 instead of Sitemesh 2
+SiteMesh 3 Grails Plugin demonstrating how to use [SiteMesh 3](https://github.com/sitemesh/sitemesh3) instead of [SiteMesh 2](https://github.com/sitemesh/sitemesh2)
 
 You can see a working example by running:
 ```./gradlew bootRun```
 
-After adding the plugin, you could see what changes would be needed in an existing app [here](https://github.com/codeconsole/grails-sitemesh3/commit/5ac65f482f22c0df983c46813c5958f036c98fab)
+The way the plugin works is by providing Grails layout tag replacements and disabling Site Mesh 2 using the `layoutViewResolver`
+setting provided by the [GroovyPagesGrailsPlugin](https://github.com/grails/grails-gsp/blob/6.0.x/grails-plugin-gsp/src/main/groovy/org/grails/plugins/web/GroovyPagesGrailsPlugin.groovy).
 
-If SiteMesh 2 can be elminitated from Grails, the `<sitemesh:` tag lib can be deleted and the `<g3:` taglib could be renamed to `<g:` and everything would be the same with the exception of how layouts are defined.
+either in `application.properties`
+```properties
+grails.gsp.view.layoutViewResolver=false
+```
+or in `application.yml`:
+```yml
+grails:
+  gsp:
+    view:
+      layoutViewResolver: false
+```
 
 The only difference between SiteMesh 2 and SiteMesh 3 would then be layouts paths:
-```<meta name="layout" content="main"/>```
-is converted to 
-```<meta name="decorator" content="/layouts/main"/>```
 
-but this could be fixed internally after SiteMesh 2 is removed from Grais as well.
+```<meta name="layout" content="main"/>```
+needs to be converted to
+```<meta name="decorator" content="/layouts/main"/>```

@@ -7,7 +7,7 @@ class UrlMappings {
                 // apply constraints here
             }
         }
-        "/layouts/main"(view:'/layouts/main')
+        "/layouts/$name"(controller: 'layout', action: 'get')
 
         "/"(view:"/index")
         "500"(view:'/error')

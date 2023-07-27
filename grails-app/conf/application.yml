@@ -57,6 +57,10 @@ grails:
         staticparts: none
     default:
       codec: html
+  gsp:
+    view:
+      layoutViewResolver: false
+
 hibernate:
   hbm2ddl:
     auto: update
@@ -64,3 +68,4 @@ hibernate:
     queries: false
     use_second_level_cache: false
     use_query_cache: false
+
