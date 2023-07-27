@@ -4,8 +4,9 @@ import grails.plugins.*
 
 import org.sitemesh.builder.SiteMeshFilterBuilder
 import org.sitemesh.config.ConfigurableSiteMeshFilter
+import org.sitemesh.grails.plugins.sitemesh3.config.GrailsMetaTagBasedDecoratorSelector
 import org.sitemesh.grails.plugins.sitemesh3.tagrules.GrailsTagRuleBundle
-
+import org.sitemesh.webapp.WebAppContext
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.core.Ordered
 
@@ -52,6 +53,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                        @Override
                        protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
                            builder.addTagRuleBundle(new GrailsTagRuleBundle())
+                           builder.setCustomDecoratorSelector(new GrailsMetaTagBasedDecoratorSelector<WebAppContext>())
                        }
                    }
                    urlPatterns = ['/*']
