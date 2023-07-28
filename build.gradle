@@ -4,13 +4,14 @@ plugins {
     id "org.grails.grails-gsp" 
     id "war" 
     id "idea" 
-    id "com.bertramlabs.asset-pipeline" 
+    id "com.bertramlabs.asset-pipeline"
     id "org.grails.grails-plugin" 
     id "application" 
-    id "eclipse" 
+    id "eclipse"
+    id 'maven-publish'
 }
 
-version "0.1"
+version "0.1-SNAPSHOT"
 group = "org.sitemesh.grails.plugins.sitemesh3"
 
 repositories {
@@ -68,6 +69,7 @@ application {
 
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
+    withSourcesJar()
 }
 
 tasks.withType(Test) {
@@ -79,4 +81,21 @@ tasks.withType(War).configureEach { War war ->
 assets {
     minifyJs = true
     minifyCss = true
+    packagePlugin = true
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            from components.java
+        }
+    }
 }
