@@ -8,6 +8,7 @@ import org.sitemesh.grails.plugins.sitemesh3.config.GrailsMetaTagBasedDecoratorS
 import org.sitemesh.grails.plugins.sitemesh3.tagrules.GrailsTagRuleBundle
 import org.sitemesh.webapp.WebAppContext
 import org.springframework.boot.web.servlet.FilterRegistrationBean
+import org.springframework.boot.web.servlet.filter.OrderedFilter
 import org.springframework.core.Ordered
 
 class Sitemesh3GrailsPlugin extends Plugin {
@@ -27,25 +28,28 @@ class Sitemesh3GrailsPlugin extends Plugin {
    Brief summary/description of the plugin.
    '''
        def profiles = ['web']
-   // URL to the plugin's documentation
-       def documentation = "https://grails.github.io/Sitemesh3/"
+       // URL to the plugin's documentation
+       def documentation = "https://github.com/codeconsole/grails-sitemesh3"
 
        // Extra (optional) plugin metadata
 
        // License: one of 'APACHE', 'GPL2', 'GPL3'
-   //    def license = "APACHE"
+       def license = "APACHE"
 
        // Details of company behind the plugin (if there is one)
-   //    def organization = [ name: "My Company", url: "https://www.my-company.com/" ]
+       def organization = [ name: "SiteMesh", url: "https://www.sitemesh.org" ]
 
        // Any additional developers beyond the author specified above.
-   //    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
+       def developers = [ [ name: "Scott Murphy" ]]
 
        // Location of the plugin's issue tracker.
-   //    def issueManagement = [ system: "GitHub", url: "https://github.com/grails/Sitemesh3/issues" ]
+       def issueManagement = [ system: "GitHub", url: "https://github.com/codeconsole/grails-sitemesh3/issues" ]
 
        // Online location of the plugin's browseable source code.
-   //    def scm = [ url: "https://github.com/grails/Sitemesh3" ]
+       def scm = [ url: "https://github.com/codeconsole/grails-sitemesh3" ]
+
+       def loadAfter = ['groovyPages']
+       def influences = ['controllers']
 
        Closure doWithSpring() { {->
                sitemesh3Filter(FilterRegistrationBean) {
@@ -57,7 +61,9 @@ class Sitemesh3GrailsPlugin extends Plugin {
                        }
                    }
                    urlPatterns = ['/*']
-                   order = Ordered.HIGHEST_PRECEDENCE
+                   // has to be before grailsWebRequestFilter
+                   // https://github.com/grails/grails-core/blob/c56c55649f7b3df614bd603ee84756324a3f8df3/grails-plugin-controllers/src/main/groovy/org/grails/plugins/web/controllers/ControllersGrailsPlugin.groovy#L110
+                   order = OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER + 29
                }
            }
        }
