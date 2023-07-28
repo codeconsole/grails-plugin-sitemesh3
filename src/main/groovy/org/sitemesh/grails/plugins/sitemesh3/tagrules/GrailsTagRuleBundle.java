@@ -11,6 +11,9 @@ public class GrailsTagRuleBundle implements TagRuleBundle {
     public void install(State defaultState, ContentProperty contentProperty, SiteMeshContext siteMeshContext) {
         defaultState.addRule("sitemesh:captureContent", new ContentBlockExtractingRule(contentProperty.getChild("page")));
         defaultState.addRule("content", new ContentBlockExtractingRule(contentProperty.getChild("page")));
+
+        // merges id, style and class attributes on the body tag.
+        defaultState.addRule("body", new ExportTagToContentAndMergeAttributesRule(siteMeshContext, contentProperty.getChild("body"), false));
     }
 
     public void cleanUp(State defaultState, ContentProperty contentProperty, SiteMeshContext siteMeshContext) {
