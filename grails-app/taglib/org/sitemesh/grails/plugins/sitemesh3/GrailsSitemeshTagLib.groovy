@@ -1,17 +1,16 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
 class GrailsSitemeshTagLib {
-    static namespace = "g"
 
-    def layoutTitle = { attrs ->
+    Closure layoutTitle = { attrs ->
         out << """<sitemesh:write property="title">${attrs.default?:''}</sitemesh:write>""".toString()
     }
 
-    def pageProperty = { attrs ->
+    Closure pageProperty = { attrs ->
         out << """<sitemesh:write property="${attrs.name}" />""".toString()
     }
 
-    def layoutHead = { attrs, body ->
+    Closure layoutHead = { attrs, body ->
         StringBuilder tag = new StringBuilder('<sitemesh:write property="head"')
         String bodyContent = body()
         if (bodyContent) {
@@ -24,7 +23,7 @@ class GrailsSitemeshTagLib {
         out << tag.toString()
     }
 
-    def layoutBody = { attrs, body ->
+    Closure layoutBody = { attrs, body ->
         StringBuilder tag = new StringBuilder('<sitemesh:write property="body"')
         String bodyContent = body()
         if (bodyContent) {
@@ -37,7 +36,7 @@ class GrailsSitemeshTagLib {
         out << tag.toString()
     }
 
-    def content = { attrs, body ->
+    Closure content = { attrs, body ->
         StringBuilder tag = new StringBuilder("""<content tag="${attrs.tag}">""")
         tag.append(body())
         tag.append('</content>')
