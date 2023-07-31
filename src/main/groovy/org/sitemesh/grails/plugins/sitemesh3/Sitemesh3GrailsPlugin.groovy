@@ -1,7 +1,8 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.plugins.*
-
+import org.grails.config.PropertySourcesConfig
+import org.grails.web.servlet.view.GroovyPageViewResolver
 import org.sitemesh.builder.SiteMeshFilterBuilder
 import org.sitemesh.config.ConfigurableSiteMeshFilter
 import org.sitemesh.config.MetaTagBasedDecoratorSelector
@@ -9,6 +10,9 @@ import org.sitemesh.grails.plugins.sitemesh3.tagrules.GrailsTagRuleBundle
 import org.sitemesh.webapp.WebAppContext
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.boot.web.servlet.filter.OrderedFilter
+import org.springframework.core.Ordered
+import org.springframework.core.env.MapPropertySource
+import org.springframework.core.env.PropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
@@ -47,25 +51,36 @@ class Sitemesh3GrailsPlugin extends Plugin {
        // Online location of the plugin's browseable source code.
        def scm = [ url: "https://github.com/codeconsole/grails-sitemesh3" ]
 
-       def loadAfter = ['groovyPages']
+       def loadBefore= ['groovyPages']
        def influences = ['controllers']
 
-       Closure doWithSpring() { {->
-               sitemesh3Filter(FilterRegistrationBean) {
-                   filter = new ConfigurableSiteMeshFilter() {
-                       @Override
-                       protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-                           builder.addTagRuleBundle(new GrailsTagRuleBundle())
-                           builder.setCustomDecoratorSelector(new MetaTagBasedDecoratorSelector<WebAppContext>().setMetaTagProperty("layout").setPrefix("/layouts/"))
-                       }
+       Closure doWithSpring() { { ->
+           sitemesh3Filter(FilterRegistrationBean) {
+               filter = new ConfigurableSiteMeshFilter() {
+                   @Override
+                   protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
+                       builder.addTagRuleBundle(new GrailsTagRuleBundle())
+                       builder.setCustomDecoratorSelector(new MetaTagBasedDecoratorSelector<WebAppContext>().setMetaTagProperty("layout").setPrefix("/layouts/"))
                    }
-                   urlPatterns = ['/*']
-                   // has to be before grailsWebRequestFilter
-                   // https://github.com/grails/grails-core/blob/c56c55649f7b3df614bd603ee84756324a3f8df3/grails-plugin-controllers/src/main/groovy/org/grails/plugins/web/controllers/ControllersGrailsPlugin.groovy#L110
-                   order = OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER + 29
                }
+               urlPatterns = ['/*']
+               // has to be before grailsWebRequestFilter
+               // https://github.com/grails/grails-core/blob/c56c55649f7b3df614bd603ee84756324a3f8df3/grails-plugin-controllers/src/main/groovy/org/grails/plugins/web/controllers/ControllersGrailsPlugin.groovy#L110
+               order = OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER + 29
            }
-       }
+           def bean = jspViewResolver(GroovyPageViewResolver) {
+               resolveJspView = config.getProperty('grails.jsp.enable', Boolean, false)
+               prefix = ''
+               suffix = '.jsp'
+           }
+           bean.lazyInit = true
+           bean.parent = "abstractViewResolver"
+
+           def propertySources = application.mainContext.environment.getPropertySources()
+           propertySources.addFirst(new MapPropertySource("sitemesh3Properties",
+                   Collections.singletonMap("grails.gsp.view.layoutViewResolver", "false")))
+           application.config = new PropertySourcesConfig(propertySources)
+       } }
 
        void doWithDynamicMethods() {
            // TODO Implement registering dynamic methods to classes (optional)
