@@ -1,7 +1,12 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
+import grails.core.gsp.GrailsTagLibClass
+import grails.gsp.TagLib
 import grails.plugins.*
 import org.grails.config.PropertySourcesConfig
+import org.grails.core.artefact.TagLibArtefactHandler
+import org.grails.taglib.TagLibraryLookup
+import org.grails.taglib.TagLibraryMetaUtils
 import org.grails.web.servlet.view.GroovyPageViewResolver
 import org.sitemesh.builder.SiteMeshFilterBuilder
 import org.sitemesh.config.ConfigurableSiteMeshFilter
@@ -60,7 +65,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                    @Override
                    protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
                        builder.addTagRuleBundle(new GrailsTagRuleBundle())
-                       builder.setCustomDecoratorSelector(new MetaTagBasedDecoratorSelector<WebAppContext>().setMetaTagProperty("layout").setPrefix("/layouts/"))
+                       builder.setCustomDecoratorSelector(new MetaTagBasedDecoratorSelector<WebAppContext>().setMetaTagName("layout").setPrefix("/layouts/"))
                    }
                }
                urlPatterns = ['/*']
@@ -86,7 +91,29 @@ class Sitemesh3GrailsPlugin extends Plugin {
            // TODO Implement registering dynamic methods to classes (optional)
        }
 
+       private void registerTagLib(Class tagLib) {
+           GrailsTagLibClass taglibClass = (GrailsTagLibClass) grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLib)
+           if (taglibClass) {
+               // replace tag library bean
+               def beanName = taglibClass.fullName
+               beans {
+                   "$beanName"(taglibClass.clazz) { bean ->
+                       bean.autowire = true
+                   }
+               }
+
+               // The tag library lookup class caches "tag -> taglib class"
+               // so we need to update it now.
+               def lookup = applicationContext.getBean('gspTagLibraryLookup', TagLibraryLookup)
+               lookup.registerTagLib(taglibClass)
+               TagLibraryMetaUtils.enhanceTagLibMetaClass(taglibClass, lookup)
+           }
+       }
+
        void doWithApplicationContext() {
+            registerTagLib(SitemeshTagLib.class)
+            registerTagLib(GrailsSitemeshTagLib.class)
+
            // TODO Implement post initialization spring config (optional)
        }
 
