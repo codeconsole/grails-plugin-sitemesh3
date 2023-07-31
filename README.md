@@ -41,3 +41,17 @@ For instance, let's use `/grails-app/views/layouts/googleAnalyticsLayout.gsp` an
     <title>Home</title>
 </head>
 ```
+
+Once the following Pull Requests are accepted, you can add the following to `build.gradle` for a smaller footprint:
+
+[Pull Request: Decouple grails-gsp from SiteMesh 2](https://github.com/grails/grails-gsp/pull/362)
+[Pull Request: Decouple grails-core from SiteMesh 2](https://github.com/grails/grails-core/pull/13087)
+
+```groovy
+configurations {
+    all {
+            exclude group:'org.grails.plugins', module:'sitemesh2'
+            exclude group:'opensymphony', module:'sitemesh'
+    }
+}
+```
