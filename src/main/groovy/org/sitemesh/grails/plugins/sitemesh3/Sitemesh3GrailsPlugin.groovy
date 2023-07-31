@@ -15,9 +15,7 @@ import org.sitemesh.grails.plugins.sitemesh3.tagrules.GrailsTagRuleBundle
 import org.sitemesh.webapp.WebAppContext
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.boot.web.servlet.filter.OrderedFilter
-import org.springframework.core.Ordered
 import org.springframework.core.env.MapPropertySource
-import org.springframework.core.env.PropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
@@ -113,8 +111,6 @@ class Sitemesh3GrailsPlugin extends Plugin {
        void doWithApplicationContext() {
             registerTagLib(SitemeshTagLib.class)
             registerTagLib(GrailsSitemeshTagLib.class)
-
-           // TODO Implement post initialization spring config (optional)
        }
 
        void onChange(Map<String, Object> event) {
