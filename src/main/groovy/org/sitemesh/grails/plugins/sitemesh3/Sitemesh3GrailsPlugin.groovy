@@ -17,39 +17,22 @@ import org.springframework.core.env.MapPropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
-    // the version or versions of Grails the plugin is designed for
        def grailsVersion = "6.0.0  > *"
-       // resources that are excluded from plugin packaging
        def pluginExcludes = [
            "grails-app/views/error.gsp"
        ]
 
-       // TODO Fill in these fields
-       def title = "Sitemesh3" // Headline display name of the plugin
-       def author = "Your name"
+       def title = "SiteMesh 3"
+       def author = "Scott Murphy"
        def authorEmail = ""
-       def description = '''\
-   Brief summary/description of the plugin.
-   '''
+       def description = "Configures Grails to use SiteMesh 3 instead of SiteMesh 2"
        def profiles = ['web']
-       // URL to the plugin's documentation
        def documentation = "https://github.com/codeconsole/grails-sitemesh3"
 
-       // Extra (optional) plugin metadata
-
-       // License: one of 'APACHE', 'GPL2', 'GPL3'
        def license = "APACHE"
-
-       // Details of company behind the plugin (if there is one)
-       def organization = [ name: "SiteMesh", url: "https://www.sitemesh.org" ]
-
-       // Any additional developers beyond the author specified above.
+       def organization = [ name: "SiteMesh", url: "https://github.com/sitemesh" ]
        def developers = [ [ name: "Scott Murphy" ]]
-
-       // Location of the plugin's issue tracker.
        def issueManagement = [ system: "GitHub", url: "https://github.com/codeconsole/grails-sitemesh3/issues" ]
-
-       // Online location of the plugin's browseable source code.
        def scm = [ url: "https://github.com/codeconsole/grails-sitemesh3" ]
 
        def loadBefore= ['groovyPages']
@@ -76,10 +59,6 @@ class Sitemesh3GrailsPlugin extends Plugin {
            application.config = new PropertySourcesConfig(propertySources)
        } }
 
-       void doWithDynamicMethods() {
-           // TODO Implement registering dynamic methods to classes (optional)
-       }
-
        private void registerTagLib(Class tagLib) {
            GrailsTagLibClass taglibClass = (GrailsTagLibClass) grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLib)
            if (taglibClass) {
@@ -104,18 +83,8 @@ class Sitemesh3GrailsPlugin extends Plugin {
             registerTagLib(GrailsSitemeshTagLib.class)
        }
 
-       void onChange(Map<String, Object> event) {
-           // TODO Implement code that is executed when any artefact that this plugin is
-           // watching is modified and reloaded. The event contains: event.source,
-           // event.application, event.manager, event.ctx, and event.plugin.
-       }
-
-       void onConfigChange(Map<String, Object> event) {
-           // TODO Implement code that is executed when the project configuration changes.
-           // The event is the same as for 'onChange'.
-       }
-
-       void onShutdown(Map<String, Object> event) {
-           // TODO Implement code that is executed when the application shuts down (optional)
-       }
+       void doWithDynamicMethods() { }
+       void onChange(Map<String, Object> event) { }
+       void onConfigChange(Map<String, Object> event) { }
+       void onShutdown(Map<String, Object> event) { }
 }
