@@ -71,13 +71,6 @@ class Sitemesh3GrailsPlugin extends Plugin {
                // https://github.com/grails/grails-core/blob/c56c55649f7b3df614bd603ee84756324a3f8df3/grails-plugin-controllers/src/main/groovy/org/grails/plugins/web/controllers/ControllersGrailsPlugin.groovy#L110
                order = OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER + 29
            }
-           def bean = jspViewResolver(GroovyPageViewResolver) {
-               resolveJspView = config.getProperty('grails.jsp.enable', Boolean, false)
-               prefix = ''
-               suffix = '.jsp'
-           }
-           bean.lazyInit = true
-           bean.parent = "abstractViewResolver"
 
            def propertySources = application.mainContext.environment.getPropertySources()
            propertySources.addFirst(new MapPropertySource("sitemesh3Properties",
