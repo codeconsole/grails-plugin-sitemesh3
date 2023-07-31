@@ -1,13 +1,11 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.core.gsp.GrailsTagLibClass
-import grails.gsp.TagLib
 import grails.plugins.*
 import org.grails.config.PropertySourcesConfig
 import org.grails.core.artefact.TagLibArtefactHandler
 import org.grails.taglib.TagLibraryLookup
 import org.grails.taglib.TagLibraryMetaUtils
-import org.grails.web.servlet.view.GroovyPageViewResolver
 import org.sitemesh.builder.SiteMeshFilterBuilder
 import org.sitemesh.config.ConfigurableSiteMeshFilter
 import org.sitemesh.config.MetaTagBasedDecoratorSelector
