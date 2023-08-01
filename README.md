@@ -15,12 +15,12 @@ Modify `build.gradle` to use the plugin
 ```groovy
 repositories {
     // ... existing repos here
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" } // added
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
-    implementation("org.sitemesh:sitemesh:3.1.0-SNAPSHOT")  // from snapshot repo
-    implementation("org.sitemesh:grails-plugin-sitemesh3:0.1-SNAPSHOT") // from snapshot repo
+    implementation("org.sitemesh:sitemesh:3.1.0-SNAPSHOT")
+    implementation("org.sitemesh:grails-plugin-sitemesh3:0.1-SNAPSHOT")
     // ... existing dependencies
 }
 ```
