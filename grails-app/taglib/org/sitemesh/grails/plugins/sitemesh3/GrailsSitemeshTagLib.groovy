@@ -2,12 +2,18 @@ package org.sitemesh.grails.plugins.sitemesh3
 
 class GrailsSitemeshTagLib {
 
-    Closure layoutTitle = { attrs ->
-        out << """<sitemesh:write property="title">${attrs.default?:''}</sitemesh:write>""".toString()
-    }
+    Closure applyLayout = { Map attrs, body -> }
 
     Closure pageProperty = { attrs ->
         out << """<sitemesh:write property="${attrs.name}" />""".toString()
+    }
+
+    Closure ifPageProperty = { Map attrs, body ->
+        throw new RuntimeException("Not Implemented. Please use pageProperty instead.")
+    }
+
+    Closure layoutTitle = { attrs ->
+        out << """<sitemesh:write property="title">${attrs.default?:''}</sitemesh:write>""".toString()
     }
 
     Closure layoutHead = { attrs, body ->
@@ -42,4 +48,6 @@ class GrailsSitemeshTagLib {
         tag.append('</content>')
         out << tag.toString()
     }
+
+    Closure render = { Map attrs, body -> throw new RuntimeException("Should Never Be Called") }
 }

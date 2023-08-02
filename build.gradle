@@ -38,7 +38,6 @@ configurations {
             exclude group:'org.grails.plugins', module:'sitemesh2'
             exclude group:'opensymphony', module:'sitemesh'
         }
-//        exclude group:'org.grails', module:'grails-web-sitemesh'
     }
 }
 
@@ -78,6 +77,10 @@ dependencies {
     testImplementation("org.grails:grails-web-testing-support")
     testImplementation("org.spockframework:spock-core")
     testImplementation("io.micronaut:micronaut-http-client")
+
+//    implementation "javax.servlet:jstl:1.1.2"
+//    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
+
 }
 
 application {
