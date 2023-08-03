@@ -19,7 +19,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.sitemesh:sitemesh:3.1.0-SNAPSHOT")
     implementation("org.sitemesh:grails-plugin-sitemesh3:0.1-SNAPSHOT")
     // ... existing dependencies
 }
