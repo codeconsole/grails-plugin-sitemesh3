@@ -48,6 +48,4 @@ class GrailsSitemeshTagLib {
         tag.append('</content>')
         out << tag.toString()
     }
-
-    Closure render = { Map attrs, body -> throw new RuntimeException("Should Never Be Called") }
 }
