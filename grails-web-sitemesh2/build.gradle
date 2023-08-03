@@ -1,0 +1,11 @@
+plugins {
+    id "java"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("org.grails:grails-encoder:6.0.0")
+}
