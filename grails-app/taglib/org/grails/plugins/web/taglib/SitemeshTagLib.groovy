@@ -1,4 +1,4 @@
-package org.sitemesh.grails.plugins.sitemesh3
+package org.grails.plugins.web.taglib
 
 import org.grails.buffer.GrailsPrintWriter
 import org.grails.buffer.StreamCharBuffer

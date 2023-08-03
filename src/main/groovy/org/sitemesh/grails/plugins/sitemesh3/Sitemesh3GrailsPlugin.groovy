@@ -44,29 +44,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
         }
     }
 
-    private void registerTagLib(Class tagLib) {
-        GrailsTagLibClass taglibClass = (GrailsTagLibClass) grailsApplication.addArtefact(TagLibArtefactHandler.TYPE, tagLib)
-        if (taglibClass) {
-            // replace tag library bean
-            def beanName = taglibClass.fullName
-            beans {
-                "$beanName"(taglibClass.clazz) { bean ->
-                    bean.autowire = true
-                }
-            }
-
-            // The tag library lookup class caches "tag -> taglib class"
-            // so we need to update it now.
-            def lookup = applicationContext.getBean('gspTagLibraryLookup', TagLibraryLookup)
-            lookup.registerTagLib(taglibClass)
-            TagLibraryMetaUtils.enhanceTagLibMetaClass(taglibClass, lookup)
-        }
-    }
-
-    void doWithApplicationContext() {
-        registerTagLib(SitemeshTagLib.class)
-        registerTagLib(GrailsSitemeshTagLib.class)
-    }
+    void doWithApplicationContext() {}
 
     void doWithDynamicMethods() {}
 

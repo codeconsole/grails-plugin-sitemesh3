@@ -15,7 +15,7 @@ plugins {
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
 
-version "0.1-SNAPSHOT"
+version "1.0-SNAPSHOT"
 group = "org.sitemesh"
 
 repositories {
@@ -38,6 +38,7 @@ configurations {
             exclude group:'org.grails.plugins', module:'sitemesh2'
             exclude group:'opensymphony', module:'sitemesh'
         }
+        exclude group:'org.grails', module:'grails-web-gsp-taglib'
     }
 }
 
