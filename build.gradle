@@ -42,7 +42,7 @@ configurations {
 }
 
 dependencies {
-    implementation("org.sitemesh:sitemesh:3.1.0-SNAPSHOT")
+    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-SNAPSHOT')
     implementation("org.grails:grails-plugin-controllers${grailsSitemesh}")
 
     implementation("org.grails:grails-core")
