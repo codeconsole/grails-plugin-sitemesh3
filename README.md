@@ -7,7 +7,9 @@ SiteMesh 3 Grails Plugin demonstrating how to use [SiteMesh 3](https://github.co
 https://github.com/grails/grails-gsp/pull/364
 If you would like to use this version, feel free to build grails-gsp locally using that pull request.
 
-OTHERWISE If you wish to use SiteMesh 3 without that merge, you can use the [1.x version](https://github.com/codeconsole/grails-sitemesh3/tree/1.x) of this plugin
+## Please use the 1.x version of the plugin if you do not want to build anything:
+
+If you wish to use SiteMesh 3 without that merge, you can use the [1.x version](https://github.com/codeconsole/grails-sitemesh3/tree/1.x) of this plugin
 
 You can see a working example by running this plugin:
 ```./gradlew bootRun```
