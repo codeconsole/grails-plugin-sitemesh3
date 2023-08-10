@@ -83,11 +83,6 @@ application {
     mainClass.set("org.sitemesh.grails.plugins.sitemesh3.Application")
 }
 
-java {
-    sourceCompatibility = JavaVersion.toVersion("11")
-    withSourcesJar()
-}
-
 tasks.withType(Test) {
     useJUnitPlatform()
 }
@@ -108,6 +103,11 @@ allprojects {
 
     group = "org.sitemesh"
     version "2.0-SNAPSHOT"
+
+    java {
+        sourceCompatibility = JavaVersion.toVersion("11")
+        withSourcesJar()
+    }
 
     publishing {
         publications {
