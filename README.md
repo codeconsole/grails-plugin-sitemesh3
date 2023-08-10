@@ -1,15 +1,11 @@
 # SiteMesh 3 Grails Plugin
 SiteMesh 3 Grails Plugin demonstrating how to use [SiteMesh 3](https://github.com/sitemesh/sitemesh3) instead of [SiteMesh 2](https://github.com/sitemesh/sitemesh2)
 
-*** Waiting on being included into Grails. [See progress here](https://github.com/grails/grails-core/issues/13058) ***
+ [See discussion here](https://github.com/grails/grails-core/issues/13058)
 
-## NOTE - This version of the plugin requires the following merge:
-https://github.com/grails/grails-gsp/pull/364
-If you would like to use this version, feel free to build grails-gsp locally using that pull request.
+## NOTE - This version of the plugin requires grails-gsp 6.0.1
 
-## Please use the 1.x version of the plugin if you do not want to build anything:
-
-If you wish to use SiteMesh 3 without that merge, you can use the [1.x version](https://github.com/codeconsole/grails-sitemesh3/tree/1.x) of this plugin
+[1.x version](https://github.com/codeconsole/grails-sitemesh3/tree/1.x) works with grails-gsp 6.0.0, but requires sitemesh2 jar in classpath.
 
 You can see a working example by running this plugin:
 ```./gradlew bootRun```
@@ -27,7 +23,7 @@ repositories {
 
 dependencies {
     implementation("org.sitemesh:grails-plugin-sitemesh3:2.0-SNAPSHOT")
-    implementation("org.grails.plugins:gsp:6.0.1-SNAPSHOT") // pull request grails-gsp#366 is needed
+    implementation("org.grails.plugins:gsp:6.0.1") 
     // ... existing dependencies
 }
 
