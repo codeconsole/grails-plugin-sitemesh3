@@ -98,6 +98,15 @@ assets {
     packagePlugin = true
 }
 
+// https://github.com/grails/grails-core/issues/12213
+jar {
+    exclude 'gsp**'
+    exclude 'META-INF/assets**'
+    exclude '**/UrlMappings*'
+    exclude '**/Application.class'
+    exclude 'messages*.properties*'
+    exclude 'layouts'
+}
 
 allprojects {
     apply plugin: 'maven-publish'
