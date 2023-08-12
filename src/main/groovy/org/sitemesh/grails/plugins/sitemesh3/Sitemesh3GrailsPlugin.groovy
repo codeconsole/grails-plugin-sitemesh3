@@ -41,6 +41,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                     'spring.sitemesh.decorator.bundles': ['sm2'],
             ]))
             application.config = new PropertySourcesConfig(propertySources)
+            grailsLayoutHandlerMapping(GrailsLayoutHandlerMapping)
         }
     }
 
