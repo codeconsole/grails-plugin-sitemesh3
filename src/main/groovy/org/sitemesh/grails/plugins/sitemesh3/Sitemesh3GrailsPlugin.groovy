@@ -29,7 +29,6 @@ class Sitemesh3GrailsPlugin extends Plugin {
     def scm = [url: "https://github.com/codeconsole/grails-sitemesh3"]
 
     def loadBefore = ['groovyPages']
-    def influences = ['controllers']
 
     Closure doWithSpring() {
         { ->
