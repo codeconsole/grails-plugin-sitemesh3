@@ -1,5 +1,6 @@
 package org.grails.plugins.web.taglib
 
+import org.grails.encoder.CodecLookup
 import org.grails.encoder.Encoder
 import org.grails.exceptions.ExceptionUtils
 import org.grails.web.errors.ErrorsViewStackTracePrinter
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils
 
 class RenderTagLib {
 
+    CodecLookup codecLookup
     GroovyPagesTemplateRenderer groovyPagesTemplateRenderer
     ErrorsViewStackTracePrinter errorsViewStackTracePrinter
 
