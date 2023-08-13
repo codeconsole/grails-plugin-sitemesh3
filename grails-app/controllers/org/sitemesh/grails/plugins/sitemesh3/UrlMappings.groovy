@@ -4,7 +4,9 @@ class UrlMappings {
     static mappings = {
         "/helloJsp"(view:"/hello")
         "/"(view:"/index")
-        "500"(view:'/error')
+        "/index(.$format)?"(view:"/index")
+//        "500"(view:'/error')
+        "500"(controller: 'error', action:'index')
         "404"(view:'/notFound')
     }
 }
