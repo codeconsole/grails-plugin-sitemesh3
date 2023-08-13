@@ -102,10 +102,18 @@ assets {
 jar {
     exclude 'gsp**'
     exclude 'META-INF/assets**'
-    exclude '**/UrlMappings*'
-    exclude '**/Application.class'
     exclude 'messages*.properties*'
     exclude 'layouts'
+
+    exclude '**/UrlMappings*'
+    exclude '**/Application.class'
+    exclude '**/Bootstrap.class'
+    List excludes = ['BootStrap','Application','UrlMappings']
+    eachFile { copyDetails ->
+        if (copyDetails.path.contains('grails-plugin.xml')) {
+            filter { line -> excludes.find{line.contains(it)}? null : line}
+        }
+    }
 }
 
 allprojects {
