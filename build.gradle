@@ -106,11 +106,10 @@ jar {
     exclude 'messages*.properties*'
     exclude 'layouts'
 
-    exclude '**/UrlMappings*'
-    exclude '**/Application.class'
-    exclude '**/Bootstrap.class'
-    exclude '**/ErrorController.class'
-    List excludes = ['BootStrap','Application','UrlMappings']
+    List excludes = ['BootStrap','Application','UrlMappings', 'ErrorController']
+    excludes.each {
+        exclude "**/${it}*.class"
+    }
     eachFile { copyDetails ->
         if (copyDetails.path.contains('grails-plugin.xml')) {
             filter { line -> excludes.find{line.contains(it)}? null : line}
