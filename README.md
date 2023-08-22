@@ -5,8 +5,6 @@ SiteMesh 3 Grails Plugin demonstrating how to use [SiteMesh 3](https://github.co
 
 ## NOTE - This version of the plugin requires grails-gsp 6.0.1
 
-[1.x version](https://github.com/codeconsole/grails-sitemesh3/tree/1.x) works with grails-gsp 6.0.0, but requires sitemesh2 jar in classpath.
-
 You can see a working example by running this plugin:
 ```./gradlew bootRun```
 
