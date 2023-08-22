@@ -6,7 +6,7 @@ class UrlMappings {
         "/"(view:"/index")
         "/index(.$format)?"(view:"/index")
 //        "500"(view:'/error')
-        "500"(controller: 'error', action:'index')
+        "500"(controller: 'demo', action:'index')
         "404"(view:'/notFound')
     }
 }

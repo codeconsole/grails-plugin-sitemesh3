@@ -1,6 +1,6 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
-class ErrorController {
+class DemoController {
 
     def index() {
         def exception = request.exception?:request.getAttribute('javax.servlet.error.exception')
