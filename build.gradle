@@ -19,13 +19,7 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core/" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
-
-// uncomment once 6.0.1-SNAPSHOT has the following merge:
-// https://github.com/grails/grails-gsp/pull/364
-//def grailsSitemesh =  ':6.0.1-SNAPSHOT'
-def grailsSitemesh =  ''
 
 configurations {
     all {
@@ -40,10 +34,9 @@ configurations {
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-SNAPSHOT')
-    implementation('org.sitemesh:sitemesh:3.1.0-SNAPSHOT')
+    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-M1')
+    implementation('org.sitemesh:sitemesh:3.1.0-M1')
     implementation project(':grails-web-sitemesh2')
-    implementation("org.grails.plugins:gsp:6.0.1")
 
     implementation("org.grails:grails-core")
     implementation("org.grails:grails-logging")
@@ -54,7 +47,7 @@ dependencies {
     implementation("org.grails:grails-plugin-services")
     implementation("org.grails:grails-plugin-url-mappings")
     implementation("org.grails:grails-web-boot")
-    implementation("org.grails.plugins:gsp:6.0.1-SNAPSHOT")
+    implementation("org.grails.plugins:gsp:6.0.1")
     implementation("org.grails.plugins:hibernate5")
     implementation("org.grails.plugins:scaffolding")
     implementation("org.hibernate:hibernate-core:5.6.15.Final")
