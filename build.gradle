@@ -36,7 +36,7 @@ dependencies {
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
     implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-M1')
     implementation('org.sitemesh:sitemesh:3.1.0-M1')
-    implementation project(':grails-web-sitemesh2')
+    implementation project(':grails-web-sitemesh2-adapter')
 
     implementation("org.grails:grails-core")
     implementation("org.grails:grails-logging")

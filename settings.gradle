@@ -14,7 +14,4 @@ pluginManagement {
 
 rootProject.name="grails-plugin-sitemesh3"
 
-include ':grails-web-sitemesh2'
-project(':grails-web-sitemesh2').projectDir = "$rootDir/grails-web-sitemesh2" as File
-
-
+include ':grails-web-sitemesh2-adapter'
