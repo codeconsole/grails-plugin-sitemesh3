@@ -36,6 +36,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
             propertySources.addFirst(new MapPropertySource("sitemesh3Properties", [
                     'grails.gsp.view.layoutViewResolver':'false',
                     'spring.sitemesh.decorator.metaTag': 'layout',
+                    'spring.sitemesh.decorator.attribute': 'org.grails.layout.name',
                     'spring.sitemesh.decorator.prefix': '/layouts/',
                     'spring.sitemesh.decorator.bundles': ['sm2'],
             ]))

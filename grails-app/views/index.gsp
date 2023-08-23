@@ -69,13 +69,6 @@
                             <g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link>
                         </li>
                     </g:each>
-                    <li class="controller">
-                        <a href="/greeting404">404 Example</a>
-                    </li>
-                    <li class="controller">
-                        <% if (params.exception) { throw new RuntimeException(params.exception) } %>
-                        <a href="?exception=Exception%20Test">500 Example</a>
-                    </li>
                 </ul>
             </div>
         </section>

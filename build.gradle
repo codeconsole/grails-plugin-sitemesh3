@@ -34,8 +34,8 @@ configurations {
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-M1')
-    implementation('org.sitemesh:sitemesh:3.1.0-M1')
+    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-SNAPSHOT')
+    implementation('org.sitemesh:sitemesh:3.1.0-SNAPSHOT')
     implementation project(':grails-web-sitemesh2-adapter')
 
     implementation("org.grails:grails-core")
@@ -59,7 +59,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("io.micronaut:micronaut-inject-groovy")
     console("org.grails:grails-console")
-    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:4.3.0")
+    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:3.4.7")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("javax.xml.bind:jaxb-api:2.3.1")
     runtimeOnly("org.apache.tomcat:tomcat-jdbc")
@@ -71,8 +71,8 @@ dependencies {
     testImplementation("org.spockframework:spock-core")
     testImplementation("io.micronaut:micronaut-http-client")
 
-//    implementation "javax.servlet:jstl:1.1.2"
-//    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
+    runtimeOnly "javax.servlet:jstl:1.1.2"
+    runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
 
 }
 
@@ -99,7 +99,7 @@ jar {
     exclude 'messages*.properties*'
     exclude 'layouts'
 
-    List excludes = ['BootStrap','Application','UrlMappings', 'ErrorController']
+    List excludes = ['BootStrap','Application','UrlMappings', 'DemoController']
     excludes.each {
         exclude "**/${it}*.class"
     }
