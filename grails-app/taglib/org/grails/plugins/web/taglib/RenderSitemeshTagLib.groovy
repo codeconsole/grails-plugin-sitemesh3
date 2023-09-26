@@ -1,24 +1,35 @@
 package org.grails.plugins.web.taglib
 
-import org.grails.encoder.CodecLookup
-import org.grails.encoder.Encoder
-import org.grails.exceptions.ExceptionUtils
-import org.grails.web.errors.ErrorsViewStackTracePrinter
-import org.grails.web.gsp.GroovyPagesTemplateRenderer
-import org.grails.web.util.WebUtils
+import org.grails.web.sitemesh.GroovyPageLayoutFinder
+import org.sitemesh.config.MetaTagBasedDecoratorSelector
 import org.sitemesh.content.Content
+import org.sitemesh.content.ContentProcessor
 import org.sitemesh.content.ContentProperty
 import org.sitemesh.webapp.WebAppContext
-import org.springframework.http.HttpStatus
-import org.springframework.util.StringUtils
+import org.sitemesh.webapp.contentfilter.ResponseMetaData
 
-class RenderTagLib {
+import java.nio.CharBuffer
 
-    CodecLookup codecLookup
-    GroovyPagesTemplateRenderer groovyPagesTemplateRenderer
-    ErrorsViewStackTracePrinter errorsViewStackTracePrinter
+class RenderSitemeshTagLib {
 
-    Closure applyLayout = { Map attrs, body -> }
+    MetaTagBasedDecoratorSelector decoratorSelector
+    ContentProcessor contentProcessor
+
+    Closure applyLayout = { Map attrs, body ->
+        String savedAttribute = request.getAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE)
+        WebAppContext context = new WebAppContext("text/html", request, response,
+                servletContext, contentProcessor,  new ResponseMetaData(), false);
+        Content content = contentProcessor.build(CharBuffer.wrap(body()), context);
+        if (attrs.name) {
+            request.setAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE, attrs.name)
+        }
+        String[] decoratorPaths = decoratorSelector.selectDecoratorPaths(content, context);
+        for (String decoratorPath : decoratorPaths) {
+            content = context.decorate(decoratorPath, content);
+        }
+        content.getData().writeValueTo(out)
+        request.setAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE, savedAttribute)
+    }
 
     private ContentProperty getContentProperty(String name) {
         if (!name) {
@@ -138,69 +149,5 @@ class RenderTagLib {
         tag.append(body())
         tag.append('</content>')
         out << tag.toString()
-    }
-
-    /**
-     * Renders a template inside views for collections, models and beans. Examples:<br/>
-     *
-     * &lt;g:render template="atemplate" collection="${users}" /&gt;<br/>
-     * &lt;g:render template="atemplate" model="[user:user,company:company]" /&gt;<br/>
-     * &lt;g:render template="atemplate" bean="${user}" /&gt;<br/>
-     *
-     * @attr template REQUIRED The name of the template to apply
-     * @attr contextPath the context path to use (relative to the application context path). Defaults to "" or path to the plugin for a plugin view or template.
-     * @attr bean The bean to apply the template against
-     * @attr model The model to apply the template against as a java.util.Map
-     * @attr collection A collection of model objects to apply the template to
-     * @attr var The variable name of the bean to be referenced in the template
-     * @attr plugin The plugin to look for the template in
-     */
-    Closure render = { Map attrs, body ->
-        groovyPagesTemplateRenderer.render(getWebRequest(), getPageScope(), attrs, body, getOut())
-        null
-    }
-
-    /**
-     * Renders an exception for the errors view
-     *
-     * @attr exception REQUIRED The exception to render
-     */
-    Closure renderException = { Map attrs ->
-        if (!(attrs?.exception instanceof Throwable)) {
-            return
-        }
-        Throwable exception = (Throwable)attrs.exception
-
-        Encoder htmlEncoder = codecLookup.lookupEncoder('HTML')
-
-        def currentOut = out
-        int statusCode = request.getAttribute('javax.servlet.error.status_code') as int
-        currentOut << """<h1>Error ${prettyPrintStatus(statusCode)}</h1>
-<dl class="error-details">
-<dt>URI</dt><dd>${htmlEncoder.encode(WebUtils.getForwardURI(request) ?: request.getAttribute('javax.servlet.error.request_uri'))}</dd>
-"""
-
-        def root = ExceptionUtils.getRootCause(exception)
-        currentOut << "<dt>Class</dt><dd>${root?.getClass()?.name ?: exception.getClass().name}</dd>"
-        currentOut << "<dt>Message</dt><dd>${htmlEncoder.encode(exception.message)}</dd>"
-        if (root != null && root != exception && root.message != exception.message) {
-            currentOut << "<dt>Caused by</dt><dd>${htmlEncoder.encode(root.message)}</dd>"
-        }
-        currentOut << "</dl>"
-
-        currentOut << errorsViewStackTracePrinter.prettyPrintCodeSnippet(exception)
-
-        def trace = errorsViewStackTracePrinter.prettyPrint(exception.cause ?: exception)
-        if (StringUtils.hasText(trace.trim())) {
-            currentOut << "<h2>Trace</h2>"
-            currentOut << '<pre class="stack">'
-            currentOut << htmlEncoder.encode(trace)
-            currentOut << '</pre>'
-        }
-    }
-
-    private String prettyPrintStatus(int statusCode) {
-        String httpStatusReason = HttpStatus.valueOf(statusCode).getReasonPhrase()
-        "$statusCode: ${httpStatusReason}"
     }
 }

@@ -25,19 +25,18 @@ repositories {
 
 dependencies {
     implementation("org.sitemesh:grails-plugin-sitemesh3:2.0-SNAPSHOT")
-    implementation("org.grails.plugins:gsp:6.0.1") 
+    implementation("org.grails.plugins:gsp:6.0.3-SNAPSHOT") {
+        exclude group:'org.grails.plugins', module:'sitemesh2'
+    }
     // ... existing dependencies
 }
-
-configurations {
-    all {
-        // ... existing configurations
-        exclude group:'opensymphony', module:'sitemesh'
-        exclude group:'org.grails', module:'grails-web-gsp-taglib'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
-}
 ```
+
+TEMPORARY: Modify `gradle.properties` to use this [pull request](https://github.com/grails/grails-core/pull/13136)
+```properties
+grailsVersion=6.0.1-SNAPSHOT
+```
+
 `oss snapshots` is needed until the plugin are officially released.
 
 ### Step 2 -  You are done. Enjoy Bonus features

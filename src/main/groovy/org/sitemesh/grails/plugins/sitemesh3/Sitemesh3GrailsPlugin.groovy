@@ -1,12 +1,10 @@
 package org.sitemesh.grails.plugins.sitemesh3
 
-import grails.core.gsp.GrailsTagLibClass
-import grails.plugins.*
+import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
-import org.grails.core.artefact.TagLibArtefactHandler
-import org.grails.taglib.TagLibraryLookup
-import org.grails.taglib.TagLibraryMetaUtils
+import org.grails.web.sitemesh.GroovyPageLayoutFinder
 import org.springframework.core.env.MapPropertySource
+import org.springframework.core.env.PropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
@@ -30,16 +28,21 @@ class Sitemesh3GrailsPlugin extends Plugin {
 
     def loadBefore = ['groovyPages']
 
+    static PropertySource getDefaultPropertySource() {
+        return new MapPropertySource("sitemesh3Properties", [
+                'grails.gsp.view.layoutViewResolver':'false',
+                'sitemesh.decorator.default': 'main',
+                'sitemesh.decorator.metaTag': 'layout',
+                'sitemesh.decorator.attribute': GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE,
+                'sitemesh.decorator.prefix': '/layouts/',
+                'sitemesh.decorator.bundles': ['sm2'],
+        ])
+    }
+
     Closure doWithSpring() {
         { ->
             def propertySources = application.mainContext.environment.getPropertySources()
-            propertySources.addFirst(new MapPropertySource("sitemesh3Properties", [
-                    'grails.gsp.view.layoutViewResolver':'false',
-                    'sitemesh.decorator.metaTag': 'layout',
-                    'sitemesh.decorator.attribute': 'org.grails.layout.name',
-                    'sitemesh.decorator.prefix': '/layouts/',
-                    'sitemesh.decorator.bundles': ['sm2'],
-            ]))
+            propertySources.addFirst(getDefaultPropertySource())
             application.config = new PropertySourcesConfig(propertySources)
             grailsLayoutHandlerMapping(GrailsLayoutHandlerMapping)
         }

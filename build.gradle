@@ -1,14 +1,15 @@
 plugins {
-    id "groovy" 
-    id "org.grails.grails-web" 
-    id "org.grails.grails-gsp" 
-    id "war" 
-    id "idea" 
+    id "groovy"
+    id "org.grails.grails-web"
+    id "org.grails.grails-gsp"
+    id "war"
+    id "idea"
     id "com.bertramlabs.asset-pipeline"
-    id "org.grails.grails-plugin" 
-    id "application" 
+    id "org.grails.grails-plugin"
+    id "application"
     id "eclipse"
     id 'maven-publish'
+    id 'java-library'
 
     id "signing"
     id "io.github.gradle-nexus.publish-plugin"
@@ -21,25 +22,14 @@ repositories {
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
-configurations {
-    all {
-        resolutionStrategy.force 'org.codehaus.groovy:groovy-xml:3.0.13'
-
-        exclude group:'opensymphony', module:'sitemesh'
-        exclude group:'org.grails', module:'grails-web-gsp-taglib'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
-}
-
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    implementation('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-M2')
-    implementation('org.sitemesh:sitemesh:3.1.0-M2')
-    implementation project(':grails-web-sitemesh2-adapter')
+    api('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-SNAPSHOT')
+    compileOnly project(':grails-web-sitemesh2-adapter')
 
-    implementation("org.grails:grails-core")
-    implementation("org.grails:grails-logging")
+    runtimeOnly("org.grails:grails-core")
+    runtimeOnly("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")
     implementation("org.grails:grails-plugin-i18n")
     implementation("org.grails:grails-plugin-interceptors")
@@ -47,16 +37,17 @@ dependencies {
     implementation("org.grails:grails-plugin-services")
     implementation("org.grails:grails-plugin-url-mappings")
     implementation("org.grails:grails-web-boot")
-    implementation("org.grails.plugins:gsp:6.0.1")
-    implementation("org.grails.plugins:hibernate5")
-    implementation("org.grails.plugins:scaffolding")
-    implementation("org.hibernate:hibernate-core:5.6.15.Final")
-    implementation("org.springframework.boot:spring-boot-autoconfigure")
-    implementation("org.springframework.boot:spring-boot-starter")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springframework.boot:spring-boot-starter-logging")
-    implementation("org.springframework.boot:spring-boot-starter-tomcat")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.grails.plugins:gsp:${grailsGspVersion}") {
+        exclude group:'org.grails.plugins', module:'sitemesh2'
+    }
+    runtimeOnly("org.grails.plugins:hibernate5")
+    runtimeOnly("org.grails.plugins:scaffolding")
+    runtimeOnly("org.hibernate:hibernate-core:5.6.15.Final")
+    runtimeOnly("org.springframework.boot:spring-boot-autoconfigure")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-logging")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-tomcat")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("io.micronaut:micronaut-inject-groovy")
     console("org.grails:grails-console")
     runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:3.4.7")
@@ -65,15 +56,12 @@ dependencies {
     runtimeOnly("org.apache.tomcat:tomcat-jdbc")
     runtimeOnly("org.fusesource.jansi:jansi:1.18")
     runtimeOnly("org.glassfish.web:el-impl:2.2.1-b05")
-    testImplementation("io.micronaut:micronaut-inject-groovy")
-    testImplementation("org.grails:grails-gorm-testing-support")
-    testImplementation("org.grails:grails-web-testing-support")
-    testImplementation("org.spockframework:spock-core")
-    testImplementation("io.micronaut:micronaut-http-client")
 
     runtimeOnly "javax.servlet:jstl:1.1.2"
     runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
 
+    api "org.grails:grails-web-gsp:${grailsGspVersion}"
+    api "org.grails:grails-web-gsp-taglib:${grailsGspVersion}"
 }
 
 application {
@@ -108,6 +96,15 @@ jar {
             filter { line -> excludes.find{line.contains(it)}? null : line}
         }
     }
+// https://stackoverflow.com/questions/29147643/how-to-exclude-dependencies-in-the-pom-file-generated-by-the-gradle
+// https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/htmlsingle/#packaging-executable.and-plain-archives
+    archiveClassifier=''
+//    enabled = false
+}
+
+// https://docs.gradle.org/current/userguide/publishing_gradle_module_metadata.html
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
 }
 
 allprojects {
@@ -116,25 +113,33 @@ allprojects {
     apply plugin: 'signing'
 
     group = "org.sitemesh"
-    version "2.0-SNAPSHOT"
+    version "2.0.0-SNAPSHOT"
 
     java {
         sourceCompatibility = JavaVersion.toVersion("11")
         withSourcesJar()
     }
 
+    // https://docs.gradle.org/current/userguide/java_library_plugin.html#:~:text=The%20api%20configuration%20should%20be,are%20internal%20to%20the%20component.
+    // https://dev.to/art_ptushkin/gradle-maven-scopes-cheat-sheet-4i56
     publishing {
         publications {
             maven(MavenPublication) {
-                versionMapping {
-                    usage('java-api') {
-                        fromResolutionOf('runtimeClasspath')
-                    }
-                    usage('java-runtime') {
-                        fromResolutionResult()
+                from components.java
+                // https://stackoverflow.com/questions/29147643/how-to-exclude-dependencies-in-the-pom-file-generated-by-the-gradle
+                pom.withXml {
+                    asNode().dependencies.dependency.each { dep ->
+                        def slf4j = dep.exclusions?.getAt(0)?.value()?.find {
+                            it.artifactId.last().value().last() == 'slf4j-simple'
+                        }
+                        if (slf4j) {
+                            assert slf4j.parent().remove(slf4j)
+                        }
+                        if (dep.scope.last().value().last() == 'runtime') {
+                            assert dep.parent().remove(dep)
+                        }
                     }
                 }
-                from components.java
             }
         }
     }
@@ -143,8 +148,6 @@ allprojects {
         sign publishing.publications.maven
     }
 }
-
-
 
 nexusPublishing {
     repositories {
