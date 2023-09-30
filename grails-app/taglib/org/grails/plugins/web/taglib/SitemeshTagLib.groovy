@@ -88,6 +88,16 @@ class SitemeshTagLib {
     Closure captureHead = { Map attrs, body ->
         captureTagContent(out, 'head', attrs, body)
     }
+
+    /**
+     * Allows passing of parameters to Sitemesh layout.<br/>
+     *
+     * &lt;sitemesh:parameter name="foo" value="bar" /&gt;
+     */
+    Closure parameter = { Map attrs, body ->
+        captureTagContent(out, 'parameter', attrs, body)
+    }
+
     Closure captureBody = { Map attrs, body ->
         captureTagContent(out, 'body', attrs, body)
     }
