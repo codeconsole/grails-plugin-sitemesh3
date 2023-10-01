@@ -10,7 +10,7 @@ class SitemeshTagLib {
     static String namespace = 'sitemesh'
     CodecLookup codecLookup
 
-    def captureTagContent(GrailsPrintWriter writer, String tagname, Map attrs, Object body, boolean noEndTagForEmpty=false) {
+    def captureTagContent(GrailsPrintWriter writer, String tagname, Map attrs, Object body, boolean noEndTagForEmpty=false, boolean useNamespace = false) {
         def content = null
         if (body != null) {
             if (body instanceof Closure) {
@@ -24,7 +24,7 @@ class SitemeshTagLib {
         if (content instanceof StreamCharBuffer) {
             content.setPreferSubChunkWhenWritingToOtherBuffer(true)
         }
-        writer << '<'
+        writer << '<'+(useNamespace? SitemeshTagLib.namespace + ':' : '')
         writer << tagname
         def useXmlClosingForEmptyTag = false
         if (attrs) {
@@ -46,7 +46,7 @@ class SitemeshTagLib {
             writer << '>'
             // the following row must be written separately (append StreamCharBuffer gets appended as subchunk)
             writer << content
-            writer << '</'
+            writer << '</'+(useNamespace? SitemeshTagLib.namespace + ':' : '')
             writer << tagname
             writer << '>'
         }
@@ -57,7 +57,7 @@ class SitemeshTagLib {
                 // for empty title, the tag must be closed properly
                 // for empty meta tag shouldn't be closed at all, see GRAILS-5696
                 if (!noEndTagForEmpty) {
-                    writer << '</'
+                    writer << '</'+(useNamespace? SitemeshTagLib.namespace + ':' : '')
                     writer << tagname
                     writer << '>'
                 }
@@ -111,5 +111,9 @@ class SitemeshTagLib {
 
     Closure wrapTitleTag = { Map attrs, body ->
         out << body()
+    }
+
+    Closure write = { Map attrs, body ->
+        captureTagContent(out, 'write', attrs, body, false, true)
     }
 }
