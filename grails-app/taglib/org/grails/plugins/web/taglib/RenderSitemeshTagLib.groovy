@@ -1,6 +1,7 @@
 package org.grails.plugins.web.taglib
 
 import org.grails.web.sitemesh.GroovyPageLayoutFinder
+import org.sitemesh.config.ConfigurableSiteMeshFilter
 import org.sitemesh.config.MetaTagBasedDecoratorSelector
 import org.sitemesh.content.Content
 import org.sitemesh.content.ContentProcessor
@@ -12,18 +13,17 @@ import java.nio.CharBuffer
 
 class RenderSitemeshTagLib {
 
-    MetaTagBasedDecoratorSelector decoratorSelector
-    ContentProcessor contentProcessor
+    ConfigurableSiteMeshFilter siteMeshFilter
 
     Closure applyLayout = { Map attrs, body ->
         String savedAttribute = request.getAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE)
         WebAppContext context = new WebAppContext("text/html", request, response,
-                servletContext, contentProcessor,  new ResponseMetaData(), false);
-        Content content = contentProcessor.build(CharBuffer.wrap(body()), context);
+                servletContext, siteMeshFilter.contentProcessor,  new ResponseMetaData(), false);
+        Content content = siteMeshFilter.contentProcessor.build(CharBuffer.wrap(body()), context);
         if (attrs.name) {
             request.setAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE, attrs.name)
         }
-        String[] decoratorPaths = decoratorSelector.selectDecoratorPaths(content, context);
+        String[] decoratorPaths = siteMeshFilter.decoratorSelector.selectDecoratorPaths(content, context);
         for (String decoratorPath : decoratorPaths) {
             content = context.decorate(decoratorPath, content);
         }
