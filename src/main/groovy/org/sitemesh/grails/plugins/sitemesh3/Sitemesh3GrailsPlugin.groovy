@@ -30,12 +30,13 @@ class Sitemesh3GrailsPlugin extends Plugin {
 
     static PropertySource getDefaultPropertySource() {
         return new MapPropertySource("sitemesh3Properties", [
-                'grails.gsp.view.layoutViewResolver':'false',
+                'grails.gsp.view.layoutViewResolver': 'false',
                 'sitemesh.decorator.default': 'main',
                 'sitemesh.decorator.metaTag': 'layout',
                 'sitemesh.decorator.attribute': GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
                 'sitemesh.decorator.bundles': ['sm2'],
+                'grails.views.gsp.sitemesh.preprocess': 'false'
         ])
     }
 
