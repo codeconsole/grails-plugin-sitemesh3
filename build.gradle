@@ -60,8 +60,12 @@ dependencies {
     runtimeOnly "javax.servlet:jstl:1.1.2"
     runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
 
-    api "org.grails:grails-web-gsp:${grailsGspVersion}"
-    api "org.grails:grails-web-gsp-taglib:${grailsGspVersion}"
+    api ("org.grails:grails-web-gsp-taglib:${grailsGspVersion}") {
+        exclude group: 'io.micronaut', module : 'micronaut-aop'
+        exclude group: 'io.micronaut', module : 'micronaut-runtime'
+        exclude group: 'io.micronaut.spring'
+        exclude group: 'io.micronaut.cache'
+    }
 }
 
 application {
