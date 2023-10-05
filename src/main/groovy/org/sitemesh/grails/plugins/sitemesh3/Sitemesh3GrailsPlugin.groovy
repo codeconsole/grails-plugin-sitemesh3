@@ -2,6 +2,7 @@ package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
+import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.sitemesh.GroovyPageLayoutFinder
 import org.springframework.core.env.MapPropertySource
 import org.springframework.core.env.PropertySource
@@ -28,22 +29,29 @@ class Sitemesh3GrailsPlugin extends Plugin {
 
     def loadBefore = ['groovyPages']
 
-    static PropertySource getDefaultPropertySource() {
-        return new MapPropertySource("sitemesh3Properties", [
+    static PropertySource getDefaultPropertySource(String defaultLayout) {
+        Map props = [
                 'grails.gsp.view.layoutViewResolver': 'false',
-                'sitemesh.decorator.default': 'main',
                 'sitemesh.decorator.metaTag': 'layout',
                 'sitemesh.decorator.attribute': GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
                 'sitemesh.decorator.bundles': ['sm2'],
                 'grails.views.gsp.sitemesh.preprocess': 'false'
-        ])
+        ]
+        if (defaultLayout) {
+            props['sitemesh.decorator.default'] = defaultLayout
+        }
+        return new MapPropertySource("sitemesh3Properties", props)
     }
+
+    GrailsConventionGroovyPageLocator groovyPageLocator
 
     Closure doWithSpring() {
         { ->
             def propertySources = application.mainContext.environment.getPropertySources()
-            propertySources.addFirst(getDefaultPropertySource())
+            // https://gsp.grails.org/latest/guide/layouts.html
+            // Default view should be application, but it is inefficient to add a rule for a page that may not exist.
+            propertySources.addFirst(getDefaultPropertySource(grailsApplication.getConfig().get("grails.sitemesh.default.layout", null)))
             application.config = new PropertySourcesConfig(propertySources)
             grailsLayoutHandlerMapping(GrailsLayoutHandlerMapping)
         }

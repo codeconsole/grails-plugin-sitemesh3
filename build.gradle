@@ -133,12 +133,6 @@ allprojects {
                 // https://stackoverflow.com/questions/29147643/how-to-exclude-dependencies-in-the-pom-file-generated-by-the-gradle
                 pom.withXml {
                     asNode().dependencies.dependency.each { dep ->
-                        def slf4j = dep.exclusions?.getAt(0)?.value()?.find {
-                            it.artifactId.last().value().last() == 'slf4j-simple'
-                        }
-                        if (slf4j) {
-                            assert slf4j.parent().remove(slf4j)
-                        }
                         if (dep.scope.last().value().last() == 'runtime') {
                             assert dep.parent().remove(dep)
                         }
