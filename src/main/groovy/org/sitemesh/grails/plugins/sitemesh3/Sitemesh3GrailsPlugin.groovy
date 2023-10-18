@@ -4,6 +4,7 @@ import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
 import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.sitemesh.GroovyPageLayoutFinder
+import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.core.env.PropertySource
 
@@ -29,7 +30,8 @@ class Sitemesh3GrailsPlugin extends Plugin {
 
     def loadBefore = ['groovyPages']
 
-    static PropertySource getDefaultPropertySource(String defaultLayout) {
+    static PropertySource getDefaultPropertySource(ConfigurableEnvironment configurableEnvironment, String defaultLayout) {
+
         Map props = [
                 'grails.gsp.view.layoutViewResolver': 'false',
                 'sitemesh.decorator.metaTag': 'layout',
@@ -41,6 +43,12 @@ class Sitemesh3GrailsPlugin extends Plugin {
         if (defaultLayout) {
             props['sitemesh.decorator.default'] = defaultLayout
         }
+        // if property already exists, don't override
+        props.clone().each {
+            if (configurableEnvironment.getProperty(it.key)) {
+                props.remove(it.key)
+            }
+        }
         return new MapPropertySource("sitemesh3Properties", props)
     }
 
@@ -48,10 +56,11 @@ class Sitemesh3GrailsPlugin extends Plugin {
 
     Closure doWithSpring() {
         { ->
-            def propertySources = application.mainContext.environment.getPropertySources()
+            ConfigurableEnvironment configurableEnvironment = application.mainContext.environment
+            def propertySources = configurableEnvironment.getPropertySources()
             // https://gsp.grails.org/latest/guide/layouts.html
             // Default view should be application, but it is inefficient to add a rule for a page that may not exist.
-            propertySources.addFirst(getDefaultPropertySource(grailsApplication.getConfig().get("grails.sitemesh.default.layout", null)))
+            propertySources.addFirst(getDefaultPropertySource(configurableEnvironment, grailsApplication.getConfig().get("grails.sitemesh.default.layout", null)))
             application.config = new PropertySourcesConfig(propertySources)
             grailsLayoutHandlerMapping(GrailsLayoutHandlerMapping)
         }
