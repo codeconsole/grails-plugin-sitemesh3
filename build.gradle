@@ -32,16 +32,27 @@ dependencies {
     runtimeOnly("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")
     implementation("org.grails:grails-plugin-i18n")
-    implementation("org.grails:grails-plugin-interceptors")
-    implementation("org.grails:grails-plugin-rest")
+    implementation("org.grails:grails-plugin-interceptors") {
+        exclude group:'org.grails.plugins', module:'sitemesh2'
+        exclude group:'org.grails', module:'grails-web-sitemesh'
+    }
+    implementation("org.grails:grails-plugin-rest") {
+        exclude group:'org.grails', module:'grails-web-sitemesh'
+    }
     implementation("org.grails:grails-plugin-services")
-    implementation("org.grails:grails-plugin-url-mappings")
+    implementation("org.grails:grails-plugin-url-mappings") {
+        exclude group:'org.grails', module:'grails-web-sitemesh'
+    }
     implementation("org.grails:grails-web-boot")
     implementation("org.grails.plugins:gsp:${grailsGspVersion}") {
         exclude group:'org.grails.plugins', module:'sitemesh2'
+        exclude group:'org.grails', module:'grails-web-sitemesh'
     }
     runtimeOnly("org.grails.plugins:hibernate5")
-    runtimeOnly("org.grails.plugins:scaffolding")
+    runtimeOnly("org.grails.plugins:scaffolding") {
+        exclude group:'org.grails.plugins', module:'sitemesh2'
+        exclude group:'org.grails', module:'grails-web-sitemesh'
+    }
     runtimeOnly("org.hibernate:hibernate-core:5.6.15.Final")
     runtimeOnly("org.springframework.boot:spring-boot-autoconfigure")
     runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
