@@ -37,7 +37,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                 'sitemesh.decorator.metaTag': 'layout',
                 'sitemesh.decorator.attribute': GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
-                'sitemesh.decorator.bundles': ['sm2'],
+                'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle'],
                 'grails.views.gsp.sitemesh.preprocess': 'false'
         ]
         if (defaultLayout) {
