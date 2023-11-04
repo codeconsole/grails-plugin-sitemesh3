@@ -62,15 +62,15 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("io.micronaut:micronaut-inject-groovy")
     console("org.grails:grails-console")
-    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:3.4.7")
+    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:4.3.0")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("javax.xml.bind:jaxb-api:2.3.1")
     runtimeOnly("org.apache.tomcat:tomcat-jdbc")
     runtimeOnly("org.fusesource.jansi:jansi:1.18")
     runtimeOnly("org.glassfish.web:el-impl:2.2.1-b05")
 
-    runtimeOnly "javax.servlet:jstl:1.1.2"
-    runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.76' // jsp example
+    runtimeOnly "javax.servlet:jstl:1.2"
+    runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper' // jsp example
 
     api ("org.grails:grails-web-gsp-taglib:${grailsGspVersion}") {
         exclude group: 'io.micronaut', module : 'micronaut-aop'
@@ -87,9 +87,7 @@ application {
 tasks.withType(Test) {
     useJUnitPlatform()
 }
-tasks.withType(War).configureEach { War war ->
-    war.dependsOn compileGroovyPages
-}
+
 assets {
     minifyJs = true
     minifyCss = true
