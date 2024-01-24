@@ -17,16 +17,16 @@ plugins {
 }
 
 repositories {
+//    mavenLocal()
     mavenCentral()
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+//    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://repo.grails.org/grails/core/" }
-    mavenLocal()
 }
 
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    api('org.sitemesh:spring-boot-starter-sitemesh:3.1.0-SNAPSHOT')
+    api('org.sitemesh:spring-boot-starter-sitemesh:3.1.0')
     compileOnly project(':grails-web-sitemesh2-adapter')
 
     runtimeOnly("org.grails:grails-core")
