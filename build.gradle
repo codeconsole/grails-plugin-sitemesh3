@@ -127,7 +127,7 @@ allprojects {
     apply plugin: 'signing'
 
     group = "org.sitemesh"
-    version "6.1.2-SNAPSHOT"
+    version "6.1.2"
 
     java {
         sourceCompatibility = JavaVersion.toVersion("11")
