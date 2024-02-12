@@ -127,7 +127,7 @@ allprojects {
     apply plugin: 'signing'
 
     group = "org.sitemesh"
-    version "2.0.0-SNAPSHOT"
+    version "6.1.0-SNAPSHOT"
 
     java {
         sourceCompatibility = JavaVersion.toVersion("11")
@@ -146,6 +146,38 @@ allprojects {
                         if (dep.scope.last().value().last() == 'runtime') {
                             assert dep.parent().remove(dep)
                         }
+                    }
+                }
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                }
+                pom {
+                    name = "SiteMesh 3 Grails Plugin"
+                    description = 'SiteMesh is a web-page layout and decoration framework and web- application integration framework to aid in creating sites consisting of many pages for which a consistent look/feel, navigation and layout scheme is required.'
+                    url = 'https://github.com/sitemesh/sitemesh3'
+                    licenses {
+                        license {
+                            name =  'The Apache Software License, Version 2.0'
+                            url =  'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution =  'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'codeconsole'
+                            name = 'Scott Murphy Heiberg'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:git://github.com/sitemesh/sitemesh3.git'
+                        developerConnection = 'scm:git:git@github.com:sitemesh/sitemesh3.git'
+                        url = 'https://github.com/sitemesh/sitemesh3/'
+                    }
+                    issueManagement {
+                        system = 'GitHub'
+                        url = 'https://github.com/sitemesh/sitemesh3/issues'
                     }
                 }
             }
