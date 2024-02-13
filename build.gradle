@@ -121,72 +121,67 @@ tasks.withType(GenerateModuleMetadata) {
     enabled = false
 }
 
-allprojects {
-    apply plugin: 'maven-publish'
-    apply plugin: 'java-library'
-    apply plugin: 'signing'
+group = "org.sitemesh"
+version "6.1.2"
 
-    group = "org.sitemesh"
-    version "6.1.2"
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    withSourcesJar()
+    withJavadocJar()
+}
 
-    java {
-        sourceCompatibility = JavaVersion.toVersion("11")
-        withSourcesJar()
-    }
-
-    // https://docs.gradle.org/current/userguide/java_library_plugin.html#:~:text=The%20api%20configuration%20should%20be,are%20internal%20to%20the%20component.
-    // https://dev.to/art_ptushkin/gradle-maven-scopes-cheat-sheet-4i56
-    publishing {
-        publications {
-            maven(MavenPublication) {
-                from components.java
-                // https://stackoverflow.com/questions/29147643/how-to-exclude-dependencies-in-the-pom-file-generated-by-the-gradle
-                pom.withXml {
-                    asNode().dependencies.dependency.each { dep ->
-                        if (dep.scope.last().value().last() == 'runtime') {
-                            assert dep.parent().remove(dep)
-                        }
+// https://docs.gradle.org/current/userguide/java_library_plugin.html#:~:text=The%20api%20configuration%20should%20be,are%20internal%20to%20the%20component.
+// https://dev.to/art_ptushkin/gradle-maven-scopes-cheat-sheet-4i56
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            // https://stackoverflow.com/questions/29147643/how-to-exclude-dependencies-in-the-pom-file-generated-by-the-gradle
+            pom.withXml {
+                asNode().dependencies.dependency.each { dep ->
+                    if (dep.scope.last().value().last() == 'runtime') {
+                        assert dep.parent().remove(dep)
                     }
                 }
-                versionMapping {
-                    usage('java-api') {
-                        fromResolutionOf('runtimeClasspath')
+            }
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+            }
+            pom {
+                name = "SiteMesh 3 Grails Plugin"
+                description = 'SiteMesh is a web-page layout and decoration framework and web- application integration framework to aid in creating sites consisting of many pages for which a consistent look/feel, navigation and layout scheme is required.'
+                url = 'https://github.com/sitemesh/sitemesh3'
+                licenses {
+                    license {
+                        name =  'The Apache Software License, Version 2.0'
+                        url =  'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution =  'repo'
                     }
                 }
-                pom {
-                    name = "SiteMesh 3 Grails Plugin"
-                    description = 'SiteMesh is a web-page layout and decoration framework and web- application integration framework to aid in creating sites consisting of many pages for which a consistent look/feel, navigation and layout scheme is required.'
-                    url = 'https://github.com/sitemesh/sitemesh3'
-                    licenses {
-                        license {
-                            name =  'The Apache Software License, Version 2.0'
-                            url =  'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                            distribution =  'repo'
-                        }
+                developers {
+                    developer {
+                        id = 'codeconsole'
+                        name = 'Scott Murphy Heiberg'
                     }
-                    developers {
-                        developer {
-                            id = 'codeconsole'
-                            name = 'Scott Murphy Heiberg'
-                        }
-                    }
-                    scm {
-                        connection = 'scm:git:git://github.com/sitemesh/sitemesh3.git'
-                        developerConnection = 'scm:git:git@github.com:sitemesh/sitemesh3.git'
-                        url = 'https://github.com/sitemesh/sitemesh3/'
-                    }
-                    issueManagement {
-                        system = 'GitHub'
-                        url = 'https://github.com/sitemesh/sitemesh3/issues'
-                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/sitemesh/sitemesh3.git'
+                    developerConnection = 'scm:git:git@github.com:sitemesh/sitemesh3.git'
+                    url = 'https://github.com/sitemesh/sitemesh3/'
+                }
+                issueManagement {
+                    system = 'GitHub'
+                    url = 'https://github.com/sitemesh/sitemesh3/issues'
                 }
             }
         }
     }
+}
 
-    signing {
-        sign publishing.publications.maven
-    }
+signing {
+    sign publishing.publications.maven
 }
 
 nexusPublishing {
