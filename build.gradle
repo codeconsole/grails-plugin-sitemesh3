@@ -119,10 +119,10 @@ tasks.withType(GenerateModuleMetadata) {
 }
 
 group = "org.sitemesh"
-version "6.2.0"
+version "7.0.0-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.toVersion("17")
     withSourcesJar()
     withJavadocJar()
 }
