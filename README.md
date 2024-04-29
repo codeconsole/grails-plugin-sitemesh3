@@ -25,7 +25,7 @@ configurations {
 }
 
 dependencies {
-    implementation("org.sitemesh:grails-plugin-sitemesh3:6.1.2")
+    implementation("org.sitemesh:grails-plugin-sitemesh3:6.2.0")
     // ... existing dependencies
 }
 ```
