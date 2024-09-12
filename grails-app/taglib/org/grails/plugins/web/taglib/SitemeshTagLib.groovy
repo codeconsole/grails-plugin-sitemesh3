@@ -4,11 +4,12 @@ import org.grails.buffer.GrailsPrintWriter
 import org.grails.buffer.StreamCharBuffer
 import org.grails.encoder.CodecLookup
 import org.grails.encoder.Encoder
-import org.grails.gsp.compiler.SitemeshPreprocessor
 
 class SitemeshTagLib {
     static String namespace = 'sitemesh'
     CodecLookup codecLookup
+    // from org.grails.gsp.compiler.SitemeshPreprocessor
+    public static final String XML_CLOSING_FOR_EMPTY_TAG_ATTRIBUTE_NAME = "gsp_sm_xmlClosingForEmptyTag";
 
     def captureTagContent(GrailsPrintWriter writer, String tagname, Map attrs, Object body, boolean noEndTagForEmpty=false, boolean useNamespace = false) {
         def content = null
@@ -28,7 +29,7 @@ class SitemeshTagLib {
         writer << tagname
         def useXmlClosingForEmptyTag = false
         if (attrs) {
-            def xmlClosingString = attrs.remove(SitemeshPreprocessor.XML_CLOSING_FOR_EMPTY_TAG_ATTRIBUTE_NAME)
+            def xmlClosingString = attrs.remove(XML_CLOSING_FOR_EMPTY_TAG_ATTRIBUTE_NAME)
             if (xmlClosingString=='/') {
                 useXmlClosingForEmptyTag = true
             }
