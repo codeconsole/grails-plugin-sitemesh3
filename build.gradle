@@ -24,11 +24,6 @@ repositories {
 
 configurations {
     all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details->
-            if (details.requested.group == 'org.seleniumhq.selenium') {
-                details.useVersion('4.19.1')
-            }
-        }
         exclude group: 'io.micronaut', module:'micronaut-inject-groovy'
 
         resolutionStrategy.dependencySubstitution {
@@ -53,31 +48,19 @@ dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
     api('org.sitemesh:spring-boot-starter-sitemesh:3.2.1')
-
     runtimeOnly("org.grails:grails-core")
     runtimeOnly("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")
     implementation("org.grails:grails-plugin-i18n")
-    implementation("org.grails:grails-plugin-interceptors") {
-        exclude group:'org.grails.plugins', module:'sitemesh2'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
-    implementation("org.grails:grails-plugin-rest") {
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
+    implementation("org.grails:grails-plugin-interceptors")
+    implementation("org.grails:grails-plugin-rest")
     implementation("org.grails:grails-plugin-services")
-    implementation("org.grails:grails-plugin-url-mappings") {
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
+    implementation("org.grails:grails-plugin-url-mappings")
     implementation("org.grails:grails-web-boot")
-    implementation("org.grails.plugins:gsp:${grailsGspVersion}") {
-        exclude group:'org.grails.plugins', module:'sitemesh2'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
+    implementation("org.grails.plugins:gsp")
     runtimeOnly("org.grails.plugins:hibernate5")
-    runtimeOnly("org.grails.plugins:scaffolding") {
-        exclude group:'org.grails.plugins', module:'sitemesh2'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
+    runtimeOnly("org.grails.plugins:scaffolding:6.0.0-SNAPSHOT") {
+        transitive = false // until fields plugin is published
     }
     runtimeOnly("org.springframework.boot:spring-boot-autoconfigure")
     runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
@@ -86,13 +69,14 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("io.micronaut:micronaut-inject-groovy")
     console("org.grails:grails-console")
-    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:5.0.0")
+    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:5.0.1")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.apache.tomcat:tomcat-jdbc")
     runtimeOnly("org.fusesource.jansi:jansi:1.18")
 
-    runtimeOnly "javax.servlet:jstl:1.2"
-    runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper' // jsp example
+    runtimeOnly "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:2.0.0"
+    runtimeOnly "org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0"
+    runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.0' // jsp example
 
     api ("org.grails:grails-web-gsp-taglib:${grailsGspVersion}") {
         exclude group: 'io.micronaut', module : 'micronaut-aop'
@@ -100,6 +84,8 @@ dependencies {
         exclude group: 'io.micronaut.spring'
         exclude group: 'io.micronaut.cache'
     }
+
+//    implementation 'org.graalvm.sdk:graal-sdk:22.0.0.2'
 }
 
 application {
@@ -144,7 +130,6 @@ tasks.withType(GenerateModuleMetadata) {
 }
 
 group = "org.sitemesh"
-version "7.0.0-SNAPSHOT"
 
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
@@ -210,4 +195,9 @@ nexusPublishing {
     repositories {
         sonatype()
     }
+}
+
+bootRun {
+    String springProfilesActive = 'spring.profiles.active'
+    systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }

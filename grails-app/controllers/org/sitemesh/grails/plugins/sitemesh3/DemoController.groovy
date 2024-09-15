@@ -16,7 +16,7 @@ class DemoController {
 
     // Use Controller to handle 500 error.
     def error500() {
-        def exception = request.exception?:request.getAttribute('javax.servlet.error.exception')
+        def exception = request.exception?:request.getAttribute('jakarta.servlet.error.exception')
         Map model = [error:exception?.message]
         if (request.forwardURI?.endsWith('.json')) {
             params.format = 'json'

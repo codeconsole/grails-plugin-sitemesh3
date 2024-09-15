@@ -13,6 +13,7 @@ dataSource:
   pooled: true
   jmxExport: true
 grails:
+  profile: web
   gorm:
     reactor:
       events: false

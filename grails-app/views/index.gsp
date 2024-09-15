@@ -1,3 +1,4 @@
+<%@ page import="org.sitemesh.config.ConfigurableSiteMeshFilter; org.springframework.core.SpringVersion; org.springframework.boot.SpringBootVersion" %>
 <!doctype html>
 <html>
 <head>
@@ -10,7 +11,7 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Application Status <span class="caret"></span></a>
         <ul class="dropdown-menu">
             <li class="dropdown-item"><a href="#">Environment: ${grails.util.Environment.current.name}</a></li>
-            <li class="dropdown-item"><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>
+%{--            <li class="dropdown-item"><a href="#">App profile: ${grailsApplication.config.grails?.profile}</a></li>--}%
             <li class="dropdown-item"><a href="#">App version:
                 <g:meta name="info.app.version"/></a>
             </li>
@@ -19,6 +20,9 @@
                 <g:meta name="info.app.grailsVersion"/></a>
             </li>
             <li class="dropdown-item"><a href="#">Groovy version: ${GroovySystem.getVersion()}</a></li>
+            <li class="dropdown-item"><a href="#">Spring Boot version: ${SpringBootVersion.getVersion()}</a></li>
+            <li class="dropdown-item"><a href="#">Spring version: ${SpringVersion.getVersion()}</a></li>
+            <li class="dropdown-item"><a href="#">SiteMesh version: ${ConfigurableSiteMeshFilter.class.getPackage().getSpecificationVersion()}</a></li>
             <li class="dropdown-item"><a href="#">JVM version: ${System.getProperty('java.version')}</a></li>
             <li role="separator" class="dropdown-divider"></li>
             <li class="dropdown-item"><a href="#">Reloading active: ${grails.util.Environment.reloadingAgentEnabled}</a></li>
