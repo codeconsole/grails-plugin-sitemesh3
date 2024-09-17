@@ -16,16 +16,13 @@ You can see a working example by running this plugin:
 
 Modify `build.gradle` to use the plugin
 ```groovy
-configurations {
-    all {
-        // ... existing configurations
-        exclude group:'org.grails.plugins', module:'sitemesh2'
-        exclude group:'org.grails', module:'grails-web-sitemesh'
-    }
+repositories {
+    // ...
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencies {
-    implementation("org.sitemesh:grails-plugin-sitemesh3:6.2.0")
+    implementation("org.sitemesh:grails-plugin-sitemesh3:7.0.0-SNAPSHOT")
     // ... existing dependencies
 }
 ```
