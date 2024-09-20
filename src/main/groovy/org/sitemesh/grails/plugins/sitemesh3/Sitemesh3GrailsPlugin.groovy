@@ -3,7 +3,7 @@ package org.sitemesh.grails.plugins.sitemesh3
 import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
 import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
-import org.grails.web.sitemesh.GroovyPageLayoutFinder
+import org.grails.web.util.WebUtils
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.core.env.PropertySource
@@ -35,7 +35,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
         Map props = [
                 'grails.gsp.view.layoutViewResolver': 'false',
                 'sitemesh.decorator.metaTag': 'layout',
-                'sitemesh.decorator.attribute': GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE,
+                'sitemesh.decorator.attribute': WebUtils.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
                 'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle'],
                 'grails.views.gsp.sitemesh.preprocess': 'false'
