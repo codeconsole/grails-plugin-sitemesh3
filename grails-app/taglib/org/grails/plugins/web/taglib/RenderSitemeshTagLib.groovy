@@ -1,10 +1,8 @@
 package org.grails.plugins.web.taglib
 
-import org.grails.web.sitemesh.GroovyPageLayoutFinder
+import org.grails.web.util.WebUtils
 import org.sitemesh.config.ConfigurableSiteMeshFilter
-import org.sitemesh.config.MetaTagBasedDecoratorSelector
 import org.sitemesh.content.Content
-import org.sitemesh.content.ContentProcessor
 import org.sitemesh.content.ContentProperty
 import org.sitemesh.webapp.WebAppContext
 import org.sitemesh.webapp.contentfilter.ResponseMetaData
@@ -16,19 +14,19 @@ class RenderSitemeshTagLib {
     ConfigurableSiteMeshFilter siteMeshFilter
 
     Closure applyLayout = { Map attrs, body ->
-        String savedAttribute = request.getAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE)
+        String savedAttribute = request.getAttribute(WebUtils.LAYOUT_ATTRIBUTE)
         WebAppContext context = new WebAppContext("text/html", request, response,
                 servletContext, siteMeshFilter.contentProcessor,  new ResponseMetaData(), false);
         Content content = siteMeshFilter.contentProcessor.build(CharBuffer.wrap(body()), context);
         if (attrs.name) {
-            request.setAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE, attrs.name)
+            request.setAttribute(WebUtils.LAYOUT_ATTRIBUTE, attrs.name)
         }
         String[] decoratorPaths = siteMeshFilter.decoratorSelector.selectDecoratorPaths(content, context);
         for (String decoratorPath : decoratorPaths) {
             content = context.decorate(decoratorPath, content);
         }
         content.getData().writeValueTo(out)
-        request.setAttribute(GroovyPageLayoutFinder.LAYOUT_ATTRIBUTE, savedAttribute)
+        request.setAttribute(WebUtils.LAYOUT_ATTRIBUTE, savedAttribute)
     }
 
     private ContentProperty getContentProperty(String name) {
