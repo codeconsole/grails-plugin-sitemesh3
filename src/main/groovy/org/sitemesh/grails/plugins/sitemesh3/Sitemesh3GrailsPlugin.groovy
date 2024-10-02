@@ -4,6 +4,7 @@ import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
 import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.util.WebUtils
+import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.core.env.PropertySource
@@ -38,7 +39,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                 'sitemesh.decorator.attribute': WebUtils.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
                 'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle'],
-                'grails.views.gsp.sitemesh.preprocess': 'false'
+                'sitemesh.filter.order': SecurityProperties.BASIC_AUTH_ORDER - 9
         ]
         if (defaultLayout) {
             props['sitemesh.decorator.default'] = defaultLayout

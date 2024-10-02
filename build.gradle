@@ -18,7 +18,7 @@ plugins {
 
 repositories {
     mavenCentral()
-//    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
@@ -47,7 +47,7 @@ configurations {
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    api('org.sitemesh:spring-boot-starter-sitemesh:3.2.1')
+    api('org.sitemesh:spring-boot-starter-sitemesh:3.2.2-SNAPSHOT')
     runtimeOnly("org.grails:grails-core")
     runtimeOnly("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")
@@ -59,9 +59,7 @@ dependencies {
     implementation("org.grails:grails-web-boot")
     implementation("org.grails.plugins:gsp")
     runtimeOnly("org.grails.plugins:hibernate5")
-    runtimeOnly("org.grails.plugins:scaffolding:6.0.0-SNAPSHOT") {
-        transitive = false // until fields plugin is published
-    }
+    runtimeOnly("org.grails.plugins:scaffolding")
     runtimeOnly("org.springframework.boot:spring-boot-autoconfigure")
     runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.springframework.boot:spring-boot-starter-logging")
