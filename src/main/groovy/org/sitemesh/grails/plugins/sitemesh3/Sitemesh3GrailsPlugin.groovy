@@ -38,8 +38,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                 'sitemesh.decorator.metaTag': 'layout',
                 'sitemesh.decorator.attribute': WebUtils.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
-                'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle'],
-                'sitemesh.filter.order': SecurityProperties.BASIC_AUTH_ORDER - 9
+                'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle']
         ]
         if (defaultLayout) {
             props['sitemesh.decorator.default'] = defaultLayout
