@@ -201,3 +201,4 @@ bootRun {
 }
 
 groovydoc.dependsOn jar
+javadoc.dependsOn jar
