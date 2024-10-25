@@ -2,9 +2,9 @@ package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
+import org.grails.config.http.GrailsFilters
 import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.util.WebUtils
-import org.springframework.boot.autoconfigure.security.SecurityProperties
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
 import org.springframework.core.env.PropertySource
@@ -38,6 +38,7 @@ class Sitemesh3GrailsPlugin extends Plugin {
                 'sitemesh.decorator.metaTag': 'layout',
                 'sitemesh.decorator.attribute': WebUtils.LAYOUT_ATTRIBUTE,
                 'sitemesh.decorator.prefix': '/layouts/',
+                'sitemesh.filter.order': GrailsFilters.SITEMESH_FILTER,
                 'sitemesh.decorator.tagRuleBundles': ['org.sitemesh.content.tagrules.html.Sm2TagRuleBundle']
         ]
         if (defaultLayout) {
