@@ -199,3 +199,5 @@ bootRun {
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
+
+groovydoc.dependsOn jar
