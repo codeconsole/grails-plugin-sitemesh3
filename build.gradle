@@ -22,28 +22,6 @@ repositories {
     maven { url "https://repo.grails.org/grails/core/" }
 }
 
-configurations {
-    all {
-        exclude group: 'io.micronaut', module:'micronaut-inject-groovy'
-
-        resolutionStrategy.dependencySubstitution {
-            substitute module("org.codehaus.groovy:groovy-all") using module("org.apache.groovy:groovy:$groovyVersion")
-        }
-
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if ((details.requested.group == 'org.codehaus.groovy' || details.requested.group == 'org.apache.groovy') && details.requested.name != 'groovy-bom') {
-                details.useTarget(group: 'org.apache.groovy', name: details.requested.name, version: "$groovyVersion")
-                details.because "The dependency coordinates are changed in Apache Groovy 4, plus ensure version"
-            }
-
-            if (details.requested.group == "io.micronaut" && details.requested.name == "micronaut-inject-groovy") {
-                details.useVersion("4.6.1")
-            }
-        }
-
-    }
-}
-
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
@@ -65,7 +43,6 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-starter-logging")
     runtimeOnly("org.springframework.boot:spring-boot-starter-tomcat")
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation")
-    compileOnly("io.micronaut:micronaut-inject-groovy")
     console("org.grails:grails-console")
     runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:5.0.1")
     runtimeOnly("com.h2database:h2")
@@ -76,14 +53,7 @@ dependencies {
     runtimeOnly "org.glassfish.web:jakarta.servlet.jsp.jstl:2.0.0"
     runtimeOnly 'org.apache.tomcat.embed:tomcat-embed-jasper:10.1.0' // jsp example
 
-    api ("org.grails:grails-web-gsp-taglib:${grailsGspVersion}") {
-        exclude group: 'io.micronaut', module : 'micronaut-aop'
-        exclude group: 'io.micronaut', module : 'micronaut-runtime'
-        exclude group: 'io.micronaut.spring'
-        exclude group: 'io.micronaut.cache'
-    }
-
-//    implementation 'org.graalvm.sdk:graal-sdk:22.0.0.2'
+    api "org.grails:grails-web-gsp-taglib:${grailsGspVersion}"
 }
 
 application {
