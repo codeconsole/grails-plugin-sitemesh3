@@ -6,6 +6,9 @@ import org.sitemesh.content.ContentProperty
 import org.sitemesh.webapp.SiteMeshFilter
 import org.sitemesh.webapp.WebAppContext
 import org.sitemesh.webapp.contentfilter.ResponseMetaData
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 
 import java.nio.CharBuffer
 
@@ -13,8 +16,9 @@ class RenderSitemeshTagLib {
 
     SiteMeshFilter siteMeshFilter
 
-    RenderSitemeshTagLib(SiteMeshFilter siteMeshFilter) {
-        this.siteMeshFilter = siteMeshFilter
+    @Autowired
+    RenderSitemeshTagLib(@Qualifier("sitemesh") FilterRegistrationBean sitemesh) {
+        this.siteMeshFilter = (SiteMeshFilter) sitemesh.getFilter()
     }
 
     Closure applyLayout = { Map attrs, body ->
