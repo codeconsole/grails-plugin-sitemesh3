@@ -11,6 +11,10 @@ class SitemeshTagLib {
     // from org.grails.gsp.compiler.SitemeshPreprocessor
     public static final String XML_CLOSING_FOR_EMPTY_TAG_ATTRIBUTE_NAME = "gsp_sm_xmlClosingForEmptyTag";
 
+    SitemeshTagLib(CodecLookup codecLookup) {
+        this.codecLookup = codecLookup
+    }
+
     def captureTagContent(GrailsPrintWriter writer, String tagname, Map attrs, Object body, boolean noEndTagForEmpty=false, boolean useNamespace = false) {
         def content = null
         if (body != null) {

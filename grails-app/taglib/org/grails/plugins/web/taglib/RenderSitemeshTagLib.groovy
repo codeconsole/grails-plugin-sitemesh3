@@ -1,9 +1,9 @@
 package org.grails.plugins.web.taglib
 
 import org.grails.web.util.WebUtils
-import org.sitemesh.config.ConfigurableSiteMeshFilter
 import org.sitemesh.content.Content
 import org.sitemesh.content.ContentProperty
+import org.sitemesh.webapp.SiteMeshFilter
 import org.sitemesh.webapp.WebAppContext
 import org.sitemesh.webapp.contentfilter.ResponseMetaData
 
@@ -11,7 +11,11 @@ import java.nio.CharBuffer
 
 class RenderSitemeshTagLib {
 
-    ConfigurableSiteMeshFilter siteMeshFilter
+    SiteMeshFilter siteMeshFilter
+
+    RenderSitemeshTagLib(SiteMeshFilter siteMeshFilter) {
+        this.siteMeshFilter = siteMeshFilter
+    }
 
     Closure applyLayout = { Map attrs, body ->
         String savedAttribute = request.getAttribute(WebUtils.LAYOUT_ATTRIBUTE)
