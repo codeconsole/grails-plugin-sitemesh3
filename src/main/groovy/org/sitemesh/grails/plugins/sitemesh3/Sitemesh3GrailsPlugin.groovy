@@ -11,7 +11,7 @@ import org.springframework.core.env.PropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
-    def grailsVersion = "6.0.0  > *"
+    def grailsVersion = "7.0.0  > *"
     def pluginExcludes = [
             "grails-app/views/error.gsp"
     ]
