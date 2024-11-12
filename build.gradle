@@ -1,20 +1,29 @@
+buildscript {
+    repositories {
+        maven { url "https://repo.grails.org/grails/core/" }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:7.0.0-SNAPSHOT"
+    }
+}
+
 plugins {
     id "groovy"
-    id "org.grails.grails-web"
-    id "org.grails.grails-gsp"
     id "war"
     id "idea"
-    id "com.bertramlabs.asset-pipeline"
-    id "org.grails.grails-plugin"
+    id "com.bertramlabs.asset-pipeline" version "5.0.1"
     id "application"
     id "eclipse"
     id 'maven-publish'
     id 'java-library'
 
     id "signing"
-    id "io.github.gradle-nexus.publish-plugin"
+    id "io.github.gradle-nexus.publish-plugin" version "2.0.0"
     id "com.gorylenko.gradle-git-properties" version "2.4.1"
 }
+
+apply plugin:"org.grails.grails-web"
+apply plugin:"org.grails.grails-gsp"
 
 repositories {
     mavenCentral()
