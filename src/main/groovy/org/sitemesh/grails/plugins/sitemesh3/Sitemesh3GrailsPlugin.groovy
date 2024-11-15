@@ -3,7 +3,6 @@ package org.sitemesh.grails.plugins.sitemesh3
 import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
 import org.grails.spring.config.http.GrailsFilters
-import org.grails.web.gsp.io.GrailsConventionGroovyPageLocator
 import org.grails.web.util.WebUtils
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
@@ -11,7 +10,7 @@ import org.springframework.core.env.PropertySource
 
 class Sitemesh3GrailsPlugin extends Plugin {
 
-    def grailsVersion = "7.0.0  > *"
+    def grailsVersion = "7.0.0-SNAPSHOT > *"
     def pluginExcludes = [
             "grails-app/views/error.gsp"
     ]
@@ -53,7 +52,6 @@ class Sitemesh3GrailsPlugin extends Plugin {
         return new MapPropertySource("sitemesh3Properties", props)
     }
 
-    GrailsConventionGroovyPageLocator groovyPageLocator
 
     Closure doWithSpring() {
         { ->
@@ -61,7 +59,8 @@ class Sitemesh3GrailsPlugin extends Plugin {
             def propertySources = configurableEnvironment.getPropertySources()
             // https://gsp.grails.org/latest/guide/layouts.html
             // Default view should be application, but it is inefficient to add a rule for a page that may not exist.
-            propertySources.addFirst(getDefaultPropertySource(configurableEnvironment, grailsApplication.getConfig().get("grails.sitemesh.default.layout", null)))
+            String defaultLayout = grailsApplication.getConfig().getProperty("grails.sitemesh.default.layout")
+            propertySources.addFirst(getDefaultPropertySource(configurableEnvironment, defaultLayout))
             application.config = new PropertySourcesConfig(propertySources)
             grailsLayoutHandlerMapping(GrailsLayoutHandlerMapping)
         }
