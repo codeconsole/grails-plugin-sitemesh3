@@ -2,7 +2,7 @@ package org.sitemesh.grails.plugins.sitemesh3
 
 import grails.plugins.Plugin
 import org.grails.config.PropertySourcesConfig
-import org.grails.spring.config.http.GrailsFilters
+import org.grails.web.config.http.GrailsFilters
 import org.grails.web.util.WebUtils
 import org.springframework.core.env.ConfigurableEnvironment
 import org.springframework.core.env.MapPropertySource
