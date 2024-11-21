@@ -29,7 +29,7 @@ public class GrailsLayoutHandlerMapping extends AbstractHandlerMapping {
         if (request.getAttribute("jakarta.servlet.forward.request_uri") == null) {
             return null; // only handle forwarded requests.
         }
-        String uri = request.getRequestURI();
+        String uri = request.getContextPath() != null ? request.getRequestURI().substring(request.getContextPath().length()) : request.getRequestURI();
         if (uri.startsWith("/layouts")) {
             ParameterizableViewController pvc = layoutCache.get(uri);
             if (pvc == null) {
