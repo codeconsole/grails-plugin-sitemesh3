@@ -29,17 +29,17 @@ public class GrailsLayoutHandlerMapping extends AbstractHandlerMapping {
         if (request.getAttribute("jakarta.servlet.forward.request_uri") == null) {
             return null; // only handle forwarded requests.
         }
-        String uri = request.getRequestURI();
-        if (uri.startsWith("/layouts")) {
-            ParameterizableViewController pvc = layoutCache.get(uri);
+        String servletPath = request.getServletPath();
+        if (servletPath.startsWith("/layouts")) {
+            ParameterizableViewController pvc = layoutCache.get(servletPath);
             if (pvc == null) {
-                if (groovyPageLocator.findViewByPath(uri) == null) {
-                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource "+uri);
+                if (groovyPageLocator.findViewByPath(servletPath) == null) {
+                    throw new ResponseStatusException(NOT_FOUND, "Unable to find resource "+servletPath);
                 }
                 pvc = new ParameterizableViewController();
                 pvc.setSupportedMethods(HttpMethod.GET.name(), HttpMethod.HEAD.name(), HttpMethod.POST.name());
-                pvc.setViewName(uri);
-                layoutCache.put(uri, pvc);
+                pvc.setViewName(servletPath);
+                layoutCache.put(servletPath, pvc);
             }
             return pvc;
         }
