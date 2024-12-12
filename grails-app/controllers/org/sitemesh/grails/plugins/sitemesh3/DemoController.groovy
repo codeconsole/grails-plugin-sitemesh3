@@ -6,6 +6,10 @@ class DemoController {
         render view:'index', layout: 'bootstrap5'
     }
 
+    def renderText() {
+        render text: '<p>Hello World</p>', contentType: 'text/html'
+    }
+
     def chaining() {} // Multiple layouts
     def jsp() { render view:'hello' } // JSP page with layout
     def viewException() {} // Exception in a view

@@ -36,6 +36,7 @@
             <li><a href="/demo/index" class="nav-link px-2${actionName == 'index'?" link-secondary":""}">Forced Layout</a></li>
             <li><a href="/demo/chaining" class="nav-link px-2${actionName == 'chaining'?" link-secondary":""}">Decorator Chaining</a></li>
             <li><a href="/demo/jsp" class="nav-link px-2${actionName == 'jsp'?" link-secondary":""}">JSP Demo</a></li>
+            <li><a href="/demo/renderText" class="nav-link px-2" target="_blank">Text</a></li>
             <li><a href="/demo/exception" class="nav-link px-2${actionName == 'exception'?" link-secondary":""}">Controller 500 Example</a></li>
             <li><a href="/demo/viewException" class="nav-link px-2${actionName == 'viewException'?" link-secondary":""}">View 500 Example</a></li>
             <li><a href="/demo/404" class="nav-link px-2${response.status == 404?" link-secondary":""}">404 Error</a></li>
