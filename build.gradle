@@ -11,7 +11,7 @@ plugins {
     id "groovy"
     id "war"
     id "idea"
-    id "com.bertramlabs.asset-pipeline" version "5.0.1"
+    id "com.bertramlabs.asset-pipeline" version "5.0.3"
     id "application"
     id "eclipse"
     id 'maven-publish'
@@ -54,7 +54,7 @@ dependencies {
     runtimeOnly("org.springframework.boot:spring-boot-starter-tomcat")
     runtimeOnly("org.springframework.boot:spring-boot-starter-validation")
     console("org.grails:grails-console")
-    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:5.0.1")
+    runtimeOnly("com.bertramlabs.plugins:asset-pipeline-grails:5.0.3")
     runtimeOnly("com.h2database:h2")
     runtimeOnly("org.apache.tomcat:tomcat-jdbc")
     runtimeOnly("org.fusesource.jansi:jansi:1.18")
