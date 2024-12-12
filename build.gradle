@@ -35,7 +35,7 @@ repositories {
 dependencies {
 // for testing purposes
 //    implementation files('lib/sitemesh-3.1.0-SNAPSHOT.jar', 'lib/spring-boot-starter-sitemesh-3.1.0-SNAPSHOT-plain.jar')
-    api('org.sitemesh:spring-boot-starter-sitemesh:3.2.2-SNAPSHOT')
+    api('org.sitemesh:spring-boot-starter-sitemesh:3.2.2')
     runtimeOnly("org.grails:grails-core")
     runtimeOnly("org.grails:grails-logging")
     implementation("org.grails:grails-plugin-databinding")
