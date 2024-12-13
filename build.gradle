@@ -118,6 +118,17 @@ java {
 // https://docs.gradle.org/current/userguide/java_library_plugin.html#:~:text=The%20api%20configuration%20should%20be,are%20internal%20to%20the%20component.
 // https://dev.to/art_ptushkin/gradle-maven-scopes-cheat-sheet-4i56
 publishing {
+    if (!project.version.toString().endsWith('SNAPSHOT')) {
+        repositories {
+            maven {
+                credentials {
+                    username = System.getenv('MAVEN_PUBLISH_USERNAME')
+                    password = System.getenv('MAVEN_PUBLISH_PASSWORD')
+                }
+                url = 'https://maven.pkg.github.com/codeconsole/grails-plugin-sitemesh3'
+            }
+        }
+    }
     publications {
         maven(MavenPublication) {
             from components.java
@@ -166,12 +177,16 @@ publishing {
 }
 
 signing {
+    useInMemoryPgpKeys(System.getenv('SIGNING_KEY'), System.getenv('SIGNING_PASSWORD'))
     sign publishing.publications.maven
 }
 
 nexusPublishing {
     repositories {
-        sonatype()
+        sonatype {
+            username = System.getenv('SONATYPE_USERNAME')
+            password = System.getenv('SONATYPE_PASSWORD')
+        }
     }
 }
 

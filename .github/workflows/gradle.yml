@@ -15,17 +15,12 @@ jobs:
           distribution: 'liberica'
           java-version: '17'
           cache: 'gradle'
-      #      - name: Setup Gradle
-      #        uses: gradle/gradle-build-action@v2
-      - name: Restore gradle.properties
-        env:
-          GRADLE_PROPERTIES: ${{ secrets.GRADLE_PROPERTIES }}
-          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
-        shell: bash
-        run: |
-          mkdir -p ~/.gradle/
-          echo "${GRADLE_PROPERTIES}" > ~/.gradle/gradle.properties
-          echo "signing.secretKeyRingFile=${HOME}/.gradle/secring.gpg" >> ~/.gradle/gradle.properties
-          echo ${GPG_SIGNING_KEY} | base64 -d > ~/.gradle/secring.gpg
       - name: Run build with Gradle Wrapper
-        run: ./gradlew test publishToSonatype
+        env:
+          MAVEN_PUBLISH_USERNAME: ${{ secrets.GITHUB_ACTOR }}
+          MAVEN_PUBLISH_PASSWORD: ${{ secrets.GH_TOKEN }}
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+        run: ./gradlew test publish
