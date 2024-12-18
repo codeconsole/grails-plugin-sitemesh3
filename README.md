@@ -27,7 +27,7 @@ dependencies {
 }
 ```
 
-`oss snapshots` is needed until the plugin are officially released.
+`oss snapshots` is needed until the plugin is officially released.
 
 ### Step 2 -  You are done. Enjoy Bonus features
 Your app is now using SiteMesh 3 and is no longer using SiteMesh 2. NO FURTHER CHANGES NEEDED.
