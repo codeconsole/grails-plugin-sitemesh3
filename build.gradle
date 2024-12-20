@@ -1,6 +1,16 @@
 buildscript {
     repositories {
         maven { url "https://repo.grails.org/grails/core/" }
+        if (System.getenv("MAVEN_PUBLISH_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
+            System.out.println("Adding Grails Core Repo")
+            maven {
+                url = 'https://maven.pkg.github.com/grails/grails-core'
+                credentials {
+                    username = 'DOES_NOT_MATTER'
+                    password = System.getenv("MAVEN_PUBLISH_PASSWORD")
+                }
+            }
+        }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:7.0.0-SNAPSHOT"
@@ -30,6 +40,17 @@ repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://repo.grails.org/grails/core/" }
+
+    if (System.getenv("MAVEN_PUBLISH_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
+        System.out.println("Adding Grails Core Repo")
+        maven {
+            url = 'https://maven.pkg.github.com/grails/grails-core'
+            credentials {
+                username = 'DOES_NOT_MATTER'
+                password = System.getenv("MAVEN_PUBLISH_PASSWORD")
+            }
+        }
+    }
 }
 
 dependencies {
