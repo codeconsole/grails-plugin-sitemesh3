@@ -139,6 +139,7 @@ publishing {
                         assert dep.parent().remove(dep)
                     }
                 }
+                asNode().dependencyManagement?.replaceNode {}
             }
             versionMapping {
                 usage('java-api') {
